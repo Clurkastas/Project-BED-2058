@@ -10,9 +10,43 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = F, include = F)
+library(tidyverse)
+library(rvest)
 ```
 
-## R Markdown
+# Background
+
+
+
+# Research Question
+
+
+# Data Sources
+```{r import}
+
+# Health Variables 
+dat_surv65 <- read_html("https://knoema.com/atlas/topics/Health/Health-Status/Survival-to-age-65-male") %>% #Survival to 65
+  html_nodes(xpath = "//table") 
+
+```
+
+# Data Cleaning
+```{r cleaning}
+
+```
+
+# Data Analysis
+```{r analysis}
+
+```
+
+## Economic Variables
+
+## Health Variables
+
+## Other Variables
+
+# Conclussion
 
 
