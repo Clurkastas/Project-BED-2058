@@ -11,8 +11,10 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, include = F)
-library(tidyverse)
-library(rvest)
+library(tidyverse) #basic cleaning/ organising functions
+library(rvest) #if we need to harvest data from webpages
+library(OECD) #connection to OECD database
+library(eurostat) #connection to eurostat database
 ```
 
 # Background
