@@ -11,10 +11,17 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, include = F)
-library(tidyverse) #basic cleaning/ organising functions
-library(rvest) #if we need to harvest data from webpages
+### Data 
 library(OECD) #connection to OECD database
 library(eurostat) #connection to eurostat database
+library(wbstats) #connection 1 to world bank
+library(WDI) #connection 2 or world bank
+library(Quandl) #connection to Quandl
+library(gapminder) #data from gapminder
+### Cleaning and Visualizing
+library(tidyverse) #basic cleaning/ organising functions
+library(rvest) #if we need to harvest data from webpages
+library(ggmap) #this way we can visualize data on maps (-> world map)
 ```
 
 # Background
@@ -30,6 +37,33 @@ library(eurostat) #connection to eurostat database
 # Health Variables 
 dat_surv65 <- read_html("https://knoema.com/atlas/topics/Health/Health-Status/Survival-to-age-65-male") %>% #Survival to 65
   html_nodes(xpath = "//table") 
+
+### 1 OECD ###
+#- load table with all available variables
+OECDdatasets <- get_datasets()
+avg_unemployment <- get_dataset("AVD_DUR")
+
+### 2 EUROSTAT ###
+#- load table with all available variables
+ES_datasets <- search_eurostat("")
+#df <- get_eurostat()
+
+### 3 WORLD BANK ###
+#- load table with all available variables
+WDI_datasets <- WDIcache()$series
+#load datasets:
+#df <- WDI()
+
+### 4 Quandl ###
+#- a way to search for datasets:
+Q_datasets <- Quandl.search("world life expectancy")
+# load datasets:
+# df <- Quandl(code)
+
+### 5 Gapminder ###
+#- 6 variables: country, continent, year, lifeExp, pop, gdpPercap
+summary(gapminder)
+
 
 ```
 
