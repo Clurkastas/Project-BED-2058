@@ -25,11 +25,43 @@ library(tidyverse) #basic cleaning/ organising functions
 ```
 
 # Background
+The idea of this project was created in middle of September 2019.
+Three guys, from different lands had some discussions about theirs' countries.
+Then, we started to think about particular question:
+"Which is the world's best country to live in?"
 
+To receive an answer for this attractive question we decided to select some 
+variables, which were considerable for us.
 
+The first significant indicator for us was health, which included: 
+Life expectancy (gapminder)
+Child mortality (gapminder)
+Survival to age 65 by both genders (knoema)
+Water Supply (knoema)
+
+The second essential variable for us was Economics (Jobs/ Income), which included:
+Inequality, gini coefficient (gapminder)
+Income, GDP (gapminder)
+Unemployment rate at the age of 25 - 54 (gapminder)
+
+The third important indicator for us was Life Satisfaction, we used OECD database.
+
+The fourth vital marker for us was Safety, which included:
+Corruption Perception Index (gapminder)
+Traffic deaths (gapminder)
+Murders/100k (The world bank data)
+
+The fifth considerable indicator for us was Education, which included:
+Gender ratio of mean age in education (DATA BASE?)
+Mean years in school (age group 25-54) (DATA BASE?)
+
+The sixth substantial marker for us was Environment, we used CO2 emissions, tonnes per person (gapminder)
 
 # Research Question
-
+To create a well-developed project, we asked the following questions:
+What is the current state of the indicator (2019 or the last year)?
+How did it develop over the years?
+How is it distributed over the continents?
 
 # Data Sources
 ```{r import}
@@ -79,11 +111,17 @@ summary(gapminder)
 
 ```
 
-## Economic Variables
-
 ## Health Variables
 
-## Other Variables
+## Economic Variables
+
+## Life Satisfaction variables
+
+## Safety Variables
+
+## Educational variables
+
+## Environmental variables
 
 # Conclussion
 
