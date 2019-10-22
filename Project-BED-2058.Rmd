@@ -19,9 +19,9 @@ library(WDI) #connection 2 or world bank
 library(Quandl) #connection to Quandl
 library(gapminder) #data from gapminder
 ### Cleaning and Visualizing
-library(tidyverse) #basic cleaning/ organising functions
 library(rvest) #if we need to harvest data from webpages
 library(ggmap) #this way we can visualize data on maps (-> world map)
+library(tidyverse) #basic cleaning/ organising functions
 ```
 
 # Background
@@ -33,11 +33,6 @@ library(ggmap) #this way we can visualize data on maps (-> world map)
 
 # Data Sources
 ```{r import}
-
-# Health Variables 
-dat_surv65 <- read_html("https://knoema.com/atlas/topics/Health/Health-Status/Survival-to-age-65-male") %>% #Survival to 65
-  html_nodes(xpath = "//table") 
-
 ### 1 OECD ###
 #- load table with all available variables
 OECDdatasets <- get_datasets()
@@ -50,15 +45,22 @@ ES_datasets <- search_eurostat("")
 
 ### 3 WORLD BANK ###
 #- load table with all available variables
-WDI_datasets <- WDIcache()$series
+WDI_datasets <- as_tibble(WDIcache()$series)
+temp <- stringr::str_detect(WDI_datasets[["name"]], "net enrolment")
+temp2 <- WDI_datasets[temp,]
+#temp2[["description"]]
 #load datasets:
-#df <- WDI()
+WDI_ch_mor <- WDI(indicator = "SH.DYN.MORT.Q3")
+WDI_ED_pri <- WDI(indicator = "UIS.NERT.1") # % in primary education
+WDI_ED_sec <- WDI(indicator = "UIS.NERA.3") # % in upper secondary education
 
 ### 4 Quandl ###
 #- a way to search for datasets:
-Q_datasets <- Quandl.search("world life expectancy")
+Q_datasets <- Quandl.search("time in.* education")
 # load datasets:
 # df <- Quandl(code)
+Q_lifeExp <- Quandl("22254767")
+Q_x2 <- Quandl("")
 
 ### 5 Gapminder ###
 #- 6 variables: country, continent, year, lifeExp, pop, gdpPercap
