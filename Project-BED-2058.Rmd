@@ -80,7 +80,7 @@ ES_datasets <- search_eurostat("")
 ### 3 WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-temp <- stringr::str_detect(WDI_datasets[["name"]], "unemployment")
+temp <- stringr::str_detect(WDI_datasets[["name"]], "pollution")
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
@@ -90,9 +90,10 @@ WDI_ch_mor2 <- WDI(indicator = "HD.HCI.MORT") #Child mortality source 2
 WDI_surv_65f <- WDI(indicator = "SP.DYN.TO65.FE.ZS") #survival to 65, female
 WDI_surv_65m <- WDI(indicator = "SP.DYN.TO65.MA.ZS") #survival to 65, male
 WDI_mor_hyg <- WDI(indicator = "SH.STA.WASH.P5") #deaths bcs of unclean water & bad hygience
-WDI_water <- WDI(indicator = "5.51.01.09.water") #access to water
 #water is dichotom and has almost no variance
 WDI_water2 <- WDI(indicator="SG.H2O.PRMS.HH.ZS") #water access in households
+WDI_cook <- WDI(indicator = "EG.CFT.ACCS.ZS	") # access for clean cooking
+WDI_mortality <- WDI(indicator = "SH.STA.AIRP.P5") #mortality rate attributed to household and ambient air pollution
 # too much missing data
 # EDUCATION ##################### Lucas
 WDI_ED_pri <- WDI(indicator = "UIS.NERT.1") # % in primary education
@@ -105,6 +106,20 @@ WDI_murder <- WDI(indicator = "VC.IHR.PSRC.P5") #intentional homicide per 100,00
 WDI_gini <- WDI(indicator = "SI.POV.GINI") # Gini Index
 WDI_unemp <- WDI(indicator = "SL.UEM.LTRM.ZS") # % of total Unemployment
 # ENVIRONMENT #################### Kirill
+WDI_water_stress <- WDI(indicator = "ER.H2O.FWST.ZS") #Level of water stress
+WDI_renewable_water <- WDI(indicator = "ER.H2O.INTR.PC") # Renewable internal freshwater resources per capita 
+WDI_CO2 <- WDI(indicator = "EN.ATM.CO2E.KT") # CO2 emissions (kt)
+WDI_air <- WDI(indicator = "EN.ATM.PM25.MC.M3") # Air pollution
+
+WDI_pollut_glass <- WDI(indicator = "EE.BOD.CGLS.ZS") # Water pollution, clay and glass industry
+WDI_pollut_chemical <- WDI(indicator = "EE.BOD.CHEM.ZS") # Water pollution, chemical industry
+WDI_pollut_food <- WDI(indicator = "EE.BOD.FOOD.ZS") # Water pollution, food industry
+WDI_pollut_metal <- WDI(indicator = "EE.BOD.MTAL.ZS") # Water pollution, metal industry
+WDI_pollut_other <- WDI(indicator = "EE.BOD.OTHR.ZS") # Water pollution, other industry 
+WDI_pollut_paper <- WDI(indicator = "EE.BOD.PAPR.ZS") # Water pollution, paper and pulp industry
+WDI_pollut_textile <- WDI(indicator = "EE.BOD.TXTL.ZS") # Water pollution, textile industry 
+WDI_pollut_wood <- WDI(indicator = "EE.BOD.WOOD.ZS") # Water pollution, wood industry 
+
 
 WDI_road %>% group_by(country) %>% 
   summarise(mean = mean(.[[3]], na.rm=T)) %>%
