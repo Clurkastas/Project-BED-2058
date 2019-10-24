@@ -80,7 +80,11 @@ ES_datasets <- search_eurostat("")
 ### 3 WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
+<<<<<<< HEAD
 temp <- stringr::str_detect(WDI_datasets[["name"]], "pollution")
+=======
+temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
+>>>>>>> 1510426dc2dda4e470c18cee64afc2cf1f9aa8f1
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
@@ -96,8 +100,14 @@ WDI_cook <- WDI(indicator = "EG.CFT.ACCS.ZS	") # access for clean cooking
 WDI_mortality <- WDI(indicator = "SH.STA.AIRP.P5") #mortality rate attributed to household and ambient air pollution
 # too much missing data
 # EDUCATION ##################### Lucas
-WDI_ED_pri <- WDI(indicator = "UIS.NERT.1") # % in primary education
-WDI_ED_sec <- WDI(indicator = "UIS.NERA.3") # % in upper secondary education
+WDI_pri_Ed <- WDI(indicator = "UIS.NERT.1") # % in primary education
+WDI_sec_Ed <- WDI(indicator = "UIS.NERA.3") # % in upper secondary education
+WDI_pri_mon <- WDI(indicator = "fin37.t.a.5") # %Gov. transfers money for pri. ed.
+WDI_sec_mon <- WDI(indicator = "fin37.t.a.6") # % Gov. transfers money for sec. ed.
+WDI_ed_dur <- WDI(indicator = "SE.SEC.DURS")
+WDI_sec_f <- WDI(indicator = "UIS.GTVP.23.GPV.F")
+WDI_pri_out <- WDI(indicator = "UIS.ROFSPPT.1") #out-of-primary-students, maybe not useful additionally
+WDI_ed_exp <- WDI(indicator = "UIS.XPUBP.UK")#gov. exp. on ed. %of total exp.
 # SAFETY ###################
 WDI_road <- WDI(indicator = "SH.STA.TRAF.P5") # traffic deaths per 1000
 WDI_pois <- WDI(indicator = "SH.STA.POIS.P5") # poison deaths per 1000
@@ -105,6 +115,13 @@ WDI_murder <- WDI(indicator = "VC.IHR.PSRC.P5") #intentional homicide per 100,00
 # ECONOMICS ################## Mattia
 WDI_gini <- WDI(indicator = "SI.POV.GINI") # Gini Index
 WDI_unemp <- WDI(indicator = "SL.UEM.LTRM.ZS") # % of total Unemployment
+WDI_y_unemp <- WDI(indicator = "SL.UEM.1524.NE.ZS	") # % youth unemployment rate 
+WDI_ad_unemp <- WDI(indicator = "SL.UEM.ADVN.ZS") # % unemployment rate with advance education 
+WDI_int_unemp <- WDI(indicator = "SL.UEM.INTM.ZS") # % unemployment rate with intermediate education
+WDI_bas_unemp <- WDI(indicator = "SL.UEM.BASC.ZS") # % unemployment rate with basic education 
+WDI_gdp <- WDI(indicator = "6.0.GDPpc_constant") # per capita gdp
+WDI_gdpgr <- WDI(indicator = "6.0.GDP_growth") #gdp growth
+
 # ENVIRONMENT #################### Kirill
 WDI_water_stress <- WDI(indicator = "ER.H2O.FWST.ZS") #Level of water stress
 WDI_renewable_water <- WDI(indicator = "ER.H2O.INTR.PC") # Renewable internal freshwater resources per capita 
@@ -144,9 +161,12 @@ dat_gap <- left_join(dat_gap, col_gap)
 
 ### JOINING DATA ###
 #join by country and year
+# what?: a lot of WDI_variables and the dat_gap
 
 datlist <- list(WDI_ED_pri, WDI_ED_sec, WDI_ch_mor, #from 3 WDI
                 gapminder) #from 5 gapminder
+
+dat <- plyr::join_all(dfs = datlist, by = c("country","year"))
 
 #Open Questions:
 #-which variables exactly
