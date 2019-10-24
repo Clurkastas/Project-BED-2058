@@ -80,7 +80,7 @@ ES_datasets <- search_eurostat("")
 ### 3 WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-temp <- stringr::str_detect(WDI_datasets[["name"]], "unemployment")
+temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
@@ -103,7 +103,18 @@ WDI_pois <- WDI(indicator = "SH.STA.POIS.P5") # poison deaths per 1000
 WDI_murder <- WDI(indicator = "VC.IHR.PSRC.P5") #intentional homicide per 100,000
 # ECONOMICS ################## Mattia
 WDI_gini <- WDI(indicator = "SI.POV.GINI") # Gini Index
-WDI_unemp <- WDI(indicator = "SL.UEM.LTRM.ZS") # % of total Unemployment
+WDI_y_unemp <- WDI(indicator = "SL.UEM.1524.NE.ZS	") # % youth unemployment rate 
+WDI_ad_unemp <- WDI(indicator = "SL.UEM.ADVN.ZS") # % unemployment rate with advance education 
+WDI_int_unemp <- WDI(indicator = "SL.UEM.INTM.ZS") # % unemployment rate with intermediate education
+WDI_bas_unemp <- WDI(indicator = "SL.UEM.BASC.ZS") # % unemployment rate with basic education 
+
+
+
+
+WDI_gdp <- WDI(indicator = "6.0.GDPpc_constant") # per capita gdp
+WDI_gdpgr <- WDI(indicator = "6.0.GDP_growth") #gdp growth
+
+
 # ENVIRONMENT #################### Kirill
 
 WDI_road %>% group_by(country) %>% 
