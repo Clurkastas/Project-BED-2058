@@ -68,7 +68,7 @@ How is it distributed over the continents?
 ### 1 OECD ###
 #- load table with all available variables
 OECDdatasets <- get_datasets()
-temp <- stringr::str_detect(OECDdatasets[["title"]], "health")
+temp <- stringr::str_detect(OECDdatasets[["title"]], "")
 temp2 <- OECDdatasets[temp,]
 OECD_unemployment <- get_dataset("AVD_DUR")
 
@@ -128,7 +128,11 @@ datlist <- list(WDI_ED_pri, WDI_ED_sec, WDI_ch_mor, #from 3 WDI
 
 #Open Questions:
 #-which variables exactly
-#-Weighing (each group = 1/6, maybe scalable as web application?)
+#-Weighing (each group = 1/6, 
+            #maybe scalable as web application?,
+            #make model from OECD life satisfaction -> apply to world)
+# Exploratory Factor Analysis
+# include size of country as support quality variable
 #-handling missing data (missings probably not random)
 #-relations between variables
 
