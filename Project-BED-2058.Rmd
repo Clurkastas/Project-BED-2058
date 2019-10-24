@@ -26,7 +26,7 @@ library(tidyverse) #basic cleaning/ organising functions
 
 # Background
 The idea of this project was created in middle of September 2019.
-Three guys, from different lands had some discussions about theirs' countries.
+Three guys, from different lands had some discussions about their countries.
 Then, we started to think about particular question:
 "Which is the world's best country to live in?"
 
@@ -68,7 +68,9 @@ How is it distributed over the continents?
 ### 1 OECD ###
 #- load table with all available variables
 OECDdatasets <- get_datasets()
-avg_unemployment <- get_dataset("AVD_DUR")
+temp <- stringr::str_detect(OECDdatasets[["title"]], "health")
+temp2 <- OECDdatasets[temp,]
+OECD_unemployment <- get_dataset("AVD_DUR")
 
 ### 2 EUROSTAT ###
 #- load table with all available variables
@@ -78,17 +80,33 @@ ES_datasets <- search_eurostat("")
 ### 3 WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-temp <- stringr::str_detect(WDI_datasets[["name"]], "net enrolment")
+temp <- stringr::str_detect(WDI_datasets[["name"]], "satisfaction")
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
-WDI_ch_mor <- WDI(indicator = "SH.DYN.MORT.Q3")
+WDI_ch_mor <- WDI(indicator = "SP.DYN.IMRT.IN") #Child mortality source 1
+WDI_ch_mor2 <- WDI(indicator = "HD.HCI.MORT") #Child mortality source 2
+WDI_surv_65f <- WDI(indicator = "SP.DYN.TO65.FE.ZS") #survival to 65, female
+WDI_surv_65m <- WDI(indicator = "SP.DYN.TO65.MA.ZS") #survival to 65, male
+WDI_murder <- WDI(indicator = "VC.IHR.PSRC.P5") #intentional homicide per 100,000
+WDI_mor_hyg <- WDI(indicator = "SH.STA.WASH.P5") #deaths bcs of unclean water & bad hygience
+WDI_water <- WDI(indicator = "5.51.01.09.water") #access to water
+#water is dichotom and has almost no variance
+WDI_water2 <- WDI(indicator="SG.H2O.PRMS.HH.ZS") #water access in households
+# too much missing data
 WDI_ED_pri <- WDI(indicator = "UIS.NERT.1") # % in primary education
 WDI_ED_sec <- WDI(indicator = "UIS.NERA.3") # % in upper secondary education
+WDI_road <- WDI(indicator = "SH.STA.TRAF.P5") # traffic deaths per 1000
+WDI_pois <- WDI(indicator = "SH.STA.POIS.P5") # poison deaths per 1000
+WDI_gini <- WDI(indicator = "SI.POV.GINI") # Gini Index
+
+WDI_road %>% group_by(country) %>% 
+  summarise(mean = mean(SH.STA.TRAF.P5, na.rm=T)) %>%
+  is.na() %>% summary() #TRUEs = missings for country
 
 ### 4 Quandl ###
 #- a way to search for datasets:
-Q_datasets <- Quandl.search("time in.* education")
+Q_datasets <- Quandl.search("murder")
 # load datasets:
 # df <- Quandl(code)
 Q_lifeExp <- Quandl("22254767")
@@ -97,9 +115,30 @@ Q_x2 <- Quandl("")
 ### 5 Gapminder ###
 #- 6 variables: country, continent, year, lifeExp, pop, gdpPercap
 summary(gapminder)
+summary(country_codes) #can be added to gapminder data for country codes
+col_gap <- cbind(country_colors,continent_colors, labels(country_colors)) %>% as.tibble()
+names(col_gap) <- c("cntry_col","cntnt_col","country")
+dat_gap <- left_join(gapminder, country_codes)
+dat_gap <- left_join(dat_gap, col_gap)
 
+### JOINING DATA ###
+
+datlist <- list(WDI_ED_pri, WDI_ED_sec, WDI_ch_mor, #from 3 WDI
+                gapminder) #from 5 gapminder
+
+#Open Questions:
+#-which variables exactly
+#-Weighing (each group = 1/6, maybe scalable as web application?)
+#-handling missing data (missings probably not random)
+#-relations between variables
+
+# Want:
+#- A plot which shows multiple placements from multiple variables to see which countries show always better values and which never do. (+ To see variance) => z-standardize and compare
 
 ```
+
+
+
 
 # Data Cleaning
 ```{r cleaning}
