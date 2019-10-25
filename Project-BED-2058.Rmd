@@ -11,17 +11,16 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = F, include = F)
-### Data 
-library(OECD) #connection to OECD database
-library(eurostat) #connection to eurostat database
-library(wbstats) #connection 1 to world bank
+### Data
 library(WDI) #connection 2 or world bank
-library(Quandl) #connection to Quandl
 library(gapminder) #data from gapminder
 ### Cleaning and Visualizing
 library(rvest) #if we need to harvest data from webpages
 library(ggmap) #this way we can visualize data on maps (-> world map)
 library(tidyverse) #basic cleaning/ organising functions
+#Analysis 
+library(psych) # for factor analysis
+library(lavaan) # EFA / CFA
 ```
 
 # Background
@@ -65,26 +64,11 @@ How is it distributed over the continents?
 
 # Data Sources
 ```{r import}
-### 1 OECD ###
-#- load table with all available variables
-OECDdatasets <- get_datasets()
-temp <- stringr::str_detect(OECDdatasets[["title"]], "")
-temp2 <- OECDdatasets[temp,]
-OECD_unemployment <- get_dataset("AVD_DUR")
 
-### 2 EUROSTAT ###
-#- load table with all available variables
-ES_datasets <- search_eurostat("")
-#df <- get_eurostat()
-
-### 3 WORLD BANK ###
+### WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-<<<<<<< HEAD
 temp <- stringr::str_detect(WDI_datasets[["name"]], "pollution")
-=======
-temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
->>>>>>> 1510426dc2dda4e470c18cee64afc2cf1f9aa8f1
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
@@ -104,7 +88,6 @@ WDI_pri_Ed <- WDI(indicator = "UIS.NERT.1") # % in primary education
 WDI_sec_Ed <- WDI(indicator = "UIS.NERA.3") # % in upper secondary education
 WDI_pri_mon <- WDI(indicator = "fin37.t.a.5") # %Gov. transfers money for pri. ed.
 WDI_sec_mon <- WDI(indicator = "fin37.t.a.6") # % Gov. transfers money for sec. ed.
-WDI_ed_dur <- WDI(indicator = "SE.SEC.DURS")
 WDI_sec_f <- WDI(indicator = "UIS.GTVP.23.GPV.F")
 WDI_pri_out <- WDI(indicator = "UIS.ROFSPPT.1") #out-of-primary-students, maybe not useful additionally
 WDI_ed_exp <- WDI(indicator = "UIS.XPUBP.UK")#gov. exp. on ed. %of total exp.
@@ -114,7 +97,7 @@ WDI_pois <- WDI(indicator = "SH.STA.POIS.P5") # poison deaths per 1000
 WDI_murder <- WDI(indicator = "VC.IHR.PSRC.P5") #intentional homicide per 100,000
 # ECONOMICS ################## Mattia
 WDI_gini <- WDI(indicator = "SI.POV.GINI") # Gini Index
-WDI_unemp <- WDI(indicator = "SL.UEM.LTRM.ZS") # % of total Unemployment
+#WDI_unemp <- WDI(indicator = "SL.UEM.LTRM.ZS") # % of total Unemployment
 WDI_y_unemp <- WDI(indicator = "SL.UEM.1524.NE.ZS	") # % youth unemployment rate 
 WDI_ad_unemp <- WDI(indicator = "SL.UEM.ADVN.ZS") # % unemployment rate with advance education 
 WDI_int_unemp <- WDI(indicator = "SL.UEM.INTM.ZS") # % unemployment rate with intermediate education
@@ -128,33 +111,25 @@ WDI_renewable_water <- WDI(indicator = "ER.H2O.INTR.PC") # Renewable internal fr
 WDI_CO2 <- WDI(indicator = "EN.ATM.CO2E.KT") # CO2 emissions (kt)
 WDI_air <- WDI(indicator = "EN.ATM.PM25.MC.M3") # Air pollution
 
-WDI_pollut_glass <- WDI(indicator = "EE.BOD.CGLS.ZS") # Water pollution, clay and glass industry
-WDI_pollut_chemical <- WDI(indicator = "EE.BOD.CHEM.ZS") # Water pollution, chemical industry
-WDI_pollut_food <- WDI(indicator = "EE.BOD.FOOD.ZS") # Water pollution, food industry
-WDI_pollut_metal <- WDI(indicator = "EE.BOD.MTAL.ZS") # Water pollution, metal industry
-WDI_pollut_other <- WDI(indicator = "EE.BOD.OTHR.ZS") # Water pollution, other industry 
-WDI_pollut_paper <- WDI(indicator = "EE.BOD.PAPR.ZS") # Water pollution, paper and pulp industry
-WDI_pollut_textile <- WDI(indicator = "EE.BOD.TXTL.ZS") # Water pollution, textile industry 
-WDI_pollut_wood <- WDI(indicator = "EE.BOD.WOOD.ZS") # Water pollution, wood industry 
+#WDI_pollut_glass <- WDI(indicator = "EE.BOD.CGLS.ZS") # Water pollution, clay and glass industry
+#WDI_pollut_chemical <- WDI(indicator = "EE.BOD.CHEM.ZS") # Water pollution, chemical industry
+#WDI_pollut_food <- WDI(indicator = "EE.BOD.FOOD.ZS") # Water pollution, food industry
+#WDI_pollut_metal <- WDI(indicator = "EE.BOD.MTAL.ZS") # Water pollution, metal industry
+#WDI_pollut_other <- WDI(indicator = "EE.BOD.OTHR.ZS") # Water pollution, other industry 
+#WDI_pollut_paper <- WDI(indicator = "EE.BOD.PAPR.ZS") # Water pollution, paper and pulp industry
+#WDI_pollut_textile <- WDI(indicator = "EE.BOD.TXTL.ZS") # Water pollution, textile industry 
+#WDI_pollut_wood <- WDI(indicator = "EE.BOD.WOOD.ZS") # Water pollution, wood industry 
 
 
 WDI_road %>% group_by(country) %>% 
   summarise(mean = mean(.[[3]], na.rm=T)) %>%
   is.na() %>% summary() #TRUEs = missings for country
 
-### 4 Quandl ###
-#- a way to search for datasets:
-Q_datasets <- Quandl.search("murder")
-# load datasets:
-# df <- Quandl(code)
-Q_lifeExp <- Quandl("22254767")
-Q_x2 <- Quandl("")
-
 ### 5 Gapminder ###
 #- 6 variables: country, continent, year, lifeExp, pop, gdpPercap
 summary(gapminder)
 summary(country_codes) #can be added to gapminder data for country codes
-col_gap <- cbind(country_colors,continent_colors, labels(country_colors)) %>% as.tibble()
+col_gap <- cbind(country_colors,continent_colors, labels(country_colors)) %>% as_tibble()
 names(col_gap) <- c("cntry_col","cntnt_col","country")
 dat_gap <- left_join(gapminder, country_codes)
 dat_gap <- left_join(dat_gap, col_gap)
@@ -163,10 +138,62 @@ dat_gap <- left_join(dat_gap, col_gap)
 #join by country and year
 # what?: a lot of WDI_variables and the dat_gap
 
-datlist <- list(WDI_ED_pri, WDI_ED_sec, WDI_ch_mor, #from 3 WDI
-                gapminder) #from 5 gapminder
+WDI_list <- list(WDI_ch_mor, 
+                 #WDI_ch_mor2, WDI_water2, #thrown out due missings
+                 WDI_surv_65f,  WDI_surv_65m, WDI_cook, 
+                #WDI_mortality, WDI_mor_hyg, #thrown out due missings
+                WDI_pri_Ed, WDI_sec_Ed,
+                #WDI_pri_mon,   WDI_sec_mon, #thrown out due missings
+                WDI_sec_f,  WDI_pri_out,
+                #WDI_road,   #thrown out due missings
+                WDI_pois ,   WDI_murder,
+                WDI_gini,   WDI_y_unemp, WDI_ad_unemp,  WDI_int_unemp,
+                WDI_bas_unemp,
+                #WDI_gdp,    WDI_gdpgr,  WDI_water_stress, #thrown out due missings
+                WDI_renewable_water,     WDI_CO2,       WDI_air)
 
-dat <- plyr::join_all(dfs = datlist, by = c("country","year"))
+#merge data from WDI
+dat <- plyr::join_all(dfs = WDI_list, by = c("country","year","iso2c"))
+dat <- full_join(dat_gap[,c(1,3:6)], dat, by=c("country","year"))
+dat <- full_join(dat_gap[,c(1:2,7:length(dat_gap))], dat, by="country")#
+names(dat) <- c("country","continent","iso_alpha","iso_num",
+                "cntry_col","cntnt_col","year","lifeExp",
+                "pop","gdpPercap","iso2c",
+                "child_mor","surv_65f","surv_65m","cook",
+                "pri_ed","sec_ed","sec_f","pri_out",
+                "poison","murder", "gini",
+                "y_unemp","ad_unemp","int_unemp","bas_unemp",
+                "renew_wat","CO2","air")
+
+#C: make dataset smaller
+#C1: delete countries without continent (like Europe, Virgin Islands, ...)
+dat <- dat[!is.na(dat$continent),]
+#C2: which columns do have little data?
+colNA <- map(dat,~table(is.na(.x))) %>%
+  map_int(~.x["FALSE"])
+colNA
+# RESULT:
+# "6.0.GDPpc_constant" doesnt have any data --> throw WDI_gdp out
+# "6.0.GDP_growth" doesnt have any data --> throw WDI_gdpgr out
+# "ER.H2O.FWST.ZS" has way less data than other vars --> throw WDI_water_stress out
+# "SH.STA.AIRP.P5" copy above --> throw WDI_mortality out
+# "SH.STA.WASH.P5" copy above --> throw WDI_mor_hyg out
+# "fin37.t.a.6" copy above --> throw WDI_sec_mon out
+# "fin37.t.a.5§ copy above --> throw WDI_pri_mon out
+# "HD.HCI.MORT" copy above --> throw WDI_ch_mor2 out
+# "SG.H2O.PRMS.HH.ZS" copy above --> throw WDI_water2 out
+# "SH.STA.TRAF.P5" copy above --> throw WDI_road out
+
+#C3: which rows do have little data?
+# the answer: many, and every one at least some
+# so instead of deleting those with missings, I'd like to shrink years to decades
+dat <- dat %>%
+  mutate(decade = floor(year/ 10) * 10,)
+dat2 <- aggregate(dat, by=list(dat$country,dat$decade),
+  FUN=mean, na.rm=TRUE)
+dat2 <- dat2[,c(1:2,10:12,14:length(dat2))]
+dat2 <- dat2[dat2$decade>=1990,]
+
 
 #Open Questions:
 #-which variables exactly
@@ -183,6 +210,21 @@ dat <- plyr::join_all(dfs = datlist, by = c("country","year"))
 
 ```
 
+```{r exploratory factor analysis}
+
+m1 <- '
+health =~ lifeExp + child_mor + surv_65f + surv_65m + cook
+education =~ pri_ed + sec_ed + sec_f + pri_out
+security =~ poison + murder
+economy =~ y_unemp + ad_unemp + int_unemp + bas_unemp
+environemt =~ renew_wat + CO2 + air
+'
+fit.m1 <- lavaan(m1, dat2, estimator = "MLR", missing = "fiml")
+summary(fit.m1, fit = T, std =T)
+modindices(fit.m1)
+
+
+```
 
 
 
