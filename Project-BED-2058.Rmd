@@ -80,11 +80,7 @@ ES_datasets <- search_eurostat("")
 ### 3 WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-<<<<<<< HEAD
-temp <- stringr::str_detect(WDI_datasets[["name"]], "pollution")
-=======
 temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
->>>>>>> 1510426dc2dda4e470c18cee64afc2cf1f9aa8f1
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
