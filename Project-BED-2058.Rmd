@@ -64,13 +64,20 @@ What is the current state of the indicator (2019 or the last year)?
 How did it develop over the years?
 How is it distributed over the continents?
 
+# 3D Exploded Pie Chart
+library(plotrix)
+slices <- c(20, 20, 20, 20, 20)
+lbls <- c("Health", "Economics", "Safety", "Education", "Environment")
+pie3D(slices,labels=lbls,explode=0.1,
+   main="Pie Chart of Variables ")
+
 # Data Sources
 ```{r import}
 
 ### WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-temp <- stringr::str_detect(WDI_datasets[["name"]], "pollution")
+temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
 temp2 <- WDI_datasets[temp,]
 #temp2[["description"]]
 #load datasets:
@@ -218,7 +225,6 @@ temp <- low_data[low_data$n>10,]$country
 keep.list <- paste(temp, collapse = '|')
 dat_long <- dat_long %>% 
   filter(grepl(keep.list, country))
-#-------------
 
 #dat_long -> dat_wide
 dat_wide <- dat_long %>%
@@ -395,5 +401,3 @@ dat_wide %>%
 ## Environmental variables
 
 # Conclussion
-
-
