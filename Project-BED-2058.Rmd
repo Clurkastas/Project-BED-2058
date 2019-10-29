@@ -340,7 +340,14 @@ dat_long <- dat_long[is.na(dat_long$measurement)==F,]
 dat_raw <- dat
 
 #clean workspace except for necessary data
-rm(list = ls()[!ls() %in% c("dat","dat_wide","dat_long")])
+write.csv(dat_raw, "dat_raw.csv")
+write.csv(dat_wide, "dat_wide.csv")
+write.csv(dat_long, "dat_long.csv")
+rm(list = ls())
+dat_raw <- read.csv("dat_raw.csv")
+dat_wide <- read.csv("dat_wide.csv")
+dat_long <- read.csv("dat_long.csv")
+
 ```
 
 
