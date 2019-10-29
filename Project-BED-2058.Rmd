@@ -121,6 +121,7 @@ temp <- dat_wide %>%
   mutate(worst10 = ifelse(rank(meta)<=10,1,0),
          top10 = ifelse(rank(meta)>=(length(meta)-10),1,0))
 ```
+
 What this method does?
 For this method, we created a new variable, which is called "meta". It includes sum of 5 variables 
 such as environment, health, economics, education and security. After we divided it for 5 (number of variables) and arranged it.
@@ -157,6 +158,24 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
 
+dat_raw <- dat_raw %>% 
+  mutate(unemp =  rowMeans(cbind(ad_unemp, bas_unemp, int_unemp), na.rm=T))
+
+econ_data <- dat_raw %>% select(country, year, gdpPercap, gini, unemp)
+
+econ_data <- econ_data[ which(econ_data$country=="Norway"|
+                                econ_data$country=="Singapore"|
+                                econ_data$country=="Ireland"),]
+econ_data <- econ_data %>% dplyr::distinct(country, year, gdpPercap, gini, unemp)
+econ_data_norway <- econ_data[ which(econ_data$country=="Norway"),]
+econ_data_singapore <- econ_data[ which(econ_data$country=="Singapore"),]
+econ_data_ireland <- econ_data[ which(econ_data$country=="Ireland"),]
+
+
+library(reshape2)
+econ_data <- reshape2::melt(econ_data, id.var = 'year')
+
+
 ```
 
 ## Safety Variables Kirill
@@ -165,6 +184,15 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = secu/2), size = 5, angle = 90)
 
+temp %>% 
+  ggplot(aes(x = mor_hyg, y = poison,
+             col = continent)) +
+  geom_point() +
+  geom_label(aes(label = country))
+
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(road), y = road,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = road/2), size = 5, angle = 90)
 ```
 
 ## Educational variables Lucas
@@ -181,8 +209,10 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = envir/2), size = 5, angle = 90)
 
-
-
+temp %>% 
+  ggplot(aes(x = CO2, y = air,
+             col = continent)) +
+  geom_point()
 ```
 
 # Conclussion
