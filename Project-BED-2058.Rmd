@@ -118,16 +118,6 @@ WDI_renewable_water <- WDI(indicator = "ER.H2O.INTR.PC") # Renewable internal fr
 WDI_CO2 <- WDI(indicator = "EN.ATM.CO2E.KT") # CO2 emissions (kt)
 WDI_air <- WDI(indicator = "EN.ATM.PM25.MC.M3") # Air pollution
 
-#WDI_pollut_glass <- WDI(indicator = "EE.BOD.CGLS.ZS") # Water pollution, clay and glass industry
-#WDI_pollut_chemical <- WDI(indicator = "EE.BOD.CHEM.ZS") # Water pollution, chemical industry
-#WDI_pollut_food <- WDI(indicator = "EE.BOD.FOOD.ZS") # Water pollution, food industry
-#WDI_pollut_metal <- WDI(indicator = "EE.BOD.MTAL.ZS") # Water pollution, metal industry
-#WDI_pollut_other <- WDI(indicator = "EE.BOD.OTHR.ZS") # Water pollution, other industry 
-#WDI_pollut_paper <- WDI(indicator = "EE.BOD.PAPR.ZS") # Water pollution, paper and pulp industry
-#WDI_pollut_textile <- WDI(indicator = "EE.BOD.TXTL.ZS") # Water pollution, textile industry 
-#WDI_pollut_wood <- WDI(indicator = "EE.BOD.WOOD.ZS") # Water pollution, wood industry 
-
-
 WDI_road %>% group_by(country) %>% 
   summarise(mean = mean(.[[3]], na.rm=T)) %>%
   is.na() %>% summary() #TRUEs = missings for country
@@ -383,6 +373,11 @@ dat_wide %>%
   geom_point() +
   geom_smooth(col="blue", method = 'loess') 
 
+#meta and population
+temp %>%
+  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'lm')
 
 ```
 
@@ -393,8 +388,11 @@ dat_wide %>%
 ```{r analysis Kirill}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
-  arrange(-meta)
+  arrange(-meta) %>%
+  mutate(worst10 = ifelse(rank(meta)<=10,1,0),
+         top10 = ifelse(rank(meta)>=(length(meta)-10),1,0))
 ```
+
 What this method does?
 For this method, we created a new variable, which is called "meta". It includes sum of 5 variables 
 such as environment, health, economics, education and security. After we divided it for 5 (number of variables) and arranged it.
@@ -416,6 +414,12 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(health), y = health,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = health/2), size = 5, angle = 90)
+
+health <- c("surv_65m","surv_65f","mortality","lifeExp","cook","child_mor")
+
+temp %>% ggplot(aes(x=surv_65m,y=surv_65f, col=continent)) +
+  geom_point() +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country))
 
 ```
 
