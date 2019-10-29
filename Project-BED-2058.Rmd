@@ -36,27 +36,26 @@ variables, which were considerable for us.
 
 The first significant indicator for us was health, which included: 
 Life expectancy (gapminder)
-Child mortality (gapminder)
-Survival to age 65 by both genders (knoema)
-Water Supply (knoema)
+Child mortality (The world bank data)
+Survival to age 65 by both genders (The world bank data)
+Water Supply (The world bank data)
 
 The second essential variable for us was Economics (Jobs/ Income), which included:
-Inequality, gini coefficient (gapminder)
+Inequality, gini coefficient (The world bank data)
 Income, GDP (gapminder)
-Unemployment rate at the age of 25 - 54 (gapminder)
+Unemployment rate at the age of 25 - 54 (The world bank data)
 
-The third important indicator for us was Life Satisfaction, we used OECD database.
-
-The fourth vital marker for us was Safety, which included:
-Corruption Perception Index (gapminder)
+The third vital marker for us was Safety, which included:
 Traffic deaths (gapminder)
 Murders/100k (The world bank data)
 
-The fifth considerable indicator for us was Education, which included:
-Gender ratio of mean age in education (DATA BASE?)
-Mean years in school (age group 25-54) (DATA BASE?)
+The fourth considerable indicator for us was Education, which included:
+Gender ratio of mean age in education (The world bank data)
+Mean years in school (age group 25-54) (The world bank data)
 
-The sixth substantial marker for us was Environment, we used CO2 emissions, tonnes per person (gapminder)
+The fifth substantial marker for us was Environment, we used:
+CO2 emissions, tonnes per person (The world bank data)
+Air pollution (The world bank data)
 
 # Research Question
 To create a well-developed project, we asked the following questions:
@@ -392,19 +391,64 @@ dat_wide %>%
 ```
 
 ```{r analysis Kirill}
+temp <- dat_wide %>%
+  mutate(meta = (envir + health + econ + educ + secu)/5) %>%
+  arrange(-meta)
+```
+What this method does?
+For this method, we created a new variable, which is called "meta". It includes sum of 5 variables 
+such as environment, health, economics, education and security. After we divided it for 5 (number of variables) and arranged it.
+
+What is the result of it?
+According for our data, the best country to live in is Norway with 1.81 points, the second place Ireland takes and the
+third is Singapore. On the bottom of our rating is located Chad.
+
+
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(meta), y = meta,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = meta/2), size = 5, angle = 90)
 
 ```
 
-## Health Variables
+## Health Variables Lucas
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(health), y = health,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = health/2), size = 5, angle = 90)
 
-## Economic Variables
+```
 
-## Life Satisfaction variables
+## Economic Variables Mattia
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
 
-## Safety Variables
+```
 
-## Educational variables
+## Safety Variables Kirill
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(secu), y = secu,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = secu/2), size = 5, angle = 90)
 
-## Environmental variables
+```
+
+## Educational variables Lucas
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(educ), y = educ,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = educ/2), size = 5, angle = 90)
+
+```
+
+## Environmental variables Kirill
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(envir), y = envir,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = envir/2), size = 5, angle = 90)
+
+```
 
 # Conclussion
