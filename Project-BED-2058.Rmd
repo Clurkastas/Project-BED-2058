@@ -347,6 +347,31 @@ rm(list = ls()[!ls() %in% c("dat","dat_wide","dat_long")])
 # Data Analysis
 ```{r analysis Lucas}
 
+dat_wide %>% 
+  ggplot(aes(x=educ, y=health,
+             col = continent, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'loess') 
+
+dat_wide %>% 
+  ggplot(aes(x=educ, y=envir,
+             col = continent, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'loess') 
+
+dat_wide %>% 
+  ggplot(aes(x=educ, y=econ,
+             col = continent, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'loess') 
+
+dat_wide %>% 
+  ggplot(aes(x=educ, y=secu,
+             col = continent, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'loess') 
+
+
 ```
 
 ```{r analysis Mattia}
