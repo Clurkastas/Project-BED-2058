@@ -384,6 +384,21 @@ dat_wide %>%
   geom_point() +
   geom_smooth(col="blue", method = 'loess') 
 
+temp <- dat_wide %>%
+  mutate(meta = (envir + health + econ + educ + secu)/5) %>%
+  arrange(-meta)
+
+# In ranks?
+ranks <- map_df(-temp[,36:40], rank) %>% 
+  add_column(country = temp$country) 
+  add_column(meta_z = temp$meta) %>%
+  mutate(metarank = (envir + health + econ + educ + secu)/5)
+
+#meta and population
+temp %>%
+  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'lm')
 
 ```
 
