@@ -134,9 +134,11 @@ third is Singapore. On the bottom of our rating is located Chad.
 ```{r}
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(meta), y = meta,  fill = continent)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = meta/2), size = 5, angle = 90)
+  geom_text(aes(label=country, y = meta/2), size = 5, angle = 90) +
+labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for living")
 
 ```
+This graph shows us top 10 best countries for living and top 10 worst countries. We ranked them by continents.
 
 ## Health Variables Lucas
 ```{r}
@@ -182,7 +184,9 @@ econ_data <- reshape2::melt(econ_data, id.var = 'year')
 ```{r}
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(secu), y = secu,  fill = continent)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = secu/2), size = 5, angle = 90)
+  geom_text(aes(label=country, y = secu/2), size = 5, angle = 90) +
+  labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for safety") +
+  scale_y_continuous(limits =  c(-3.2,1))
 
 temp %>% 
   ggplot(aes(x = mor_hyg, y = poison,
@@ -208,7 +212,8 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
 ```{r}
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(envir), y = envir,  fill = continent)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = envir/2), size = 5, angle = 90)
+  geom_text(aes(label=country, y = envir/2), size = 5, angle = 90) +
+    labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for environment")
 
 temp %>% 
   ggplot(aes(x = CO2, y = air,
