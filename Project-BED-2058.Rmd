@@ -441,11 +441,12 @@ temp %>%
   ggplot(aes(x = mor_hyg, y = poison,
              col = continent)) +
   geom_point() +
-  geom_label(aes(label = country))
+  geom_text(dat=temp[temp$worst10==1,], aes(label=country))
 
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(road), y = road,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = road/2), size = 5, angle = 90)
+
 ```
 
 ## Educational variables Lucas
@@ -465,6 +466,7 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
 temp %>% 
   ggplot(aes(x = CO2, y = air,
              col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
   geom_point()
 ```
 
