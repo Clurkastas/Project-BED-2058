@@ -214,6 +214,7 @@ levels(temp_ed$variable) <- c("% of children in primary education",
                               "% of children in secondary education",
                               "% of students receiving money transfers from state for secondary education")
 
+#graph
 temp_ed %>%
   ggplot(aes(x=educ, y= measurement, label=country)) +
   geom_point(col="grey") +
