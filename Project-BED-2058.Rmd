@@ -11,7 +11,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 rm(list=ls()) #delete workspace
-knitr::opts_chunk$set(echo = F, include = F)
+knitr::opts_chunk$set(echo = F, include = F, warning=F, error=F)
 
 ### Cleaning and Visualizing
 library(ggmap) #this way we can visualize data on maps (-> world map)
@@ -101,25 +101,24 @@ dat_wide %>%
              col = continent, size=pop)) +
   geom_point() +
   geom_smooth(col="blue", method = 'loess') 
-
-#meta and population
-temp %>%
-  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'lm')
-
 ```
 
 ```{r analysis Mattia}
 
 ```
 
-```{r analysis Kirill}
+```{r analysis Kirill, include = T}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
   arrange(-meta) %>%
-  mutate(worst10 = ifelse(rank(meta)<=10,1,0),
-         top10 = ifelse(rank(meta)>=(length(meta)-10),1,0))
+  mutate(worst10 = as.factor(ifelse(rank(meta)<=10,1,0)),
+         top10 = as.factor(ifelse(rank(meta)>=(length(meta)-10),1,0)))
+
+#meta and population
+temp %>%
+  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'lm')
 ```
 
 What this method does?
@@ -226,10 +225,27 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
 ```
 
 ## Educational variables Lucas
-```{r}
+```{r, include = T}
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(educ), y = educ,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = educ/2), size = 5, angle = 90)
+
+educ <- c("pri_ed","sec_ed","pri_mon","sec_mon")
+temp_ed <- dat_long[str_detect(dat_long$variable,paste(educ, collapse="|")),]
+temp_ed <- left_join(temp_ed,temp[,c("country","educ","top10","worst10")],by="country") %>%
+  mutate(variable = as.factor(as.character(temp_ed$variable)))
+levels(temp_ed$variable) <- c("% of children in primary education",
+                              "% of students receiving money transfers from state for primary education",
+                              "% of children in secondary education",
+                              "% of students receiving money transfers from state for secondary education")
+
+#graph
+temp_ed %>%
+  ggplot(aes(x=educ, y= measurement, label=country)) +
+  geom_point(col="grey") +
+  geom_text(dat=temp_ed[temp_ed$top10==1,], aes(label=country), color="green", size=3)+
+  geom_text(dat=temp_ed[temp_ed$worst10==1,], aes(label=country), color="red", size=3) +
+  facet_wrap(~variable)
 
 ```
 
