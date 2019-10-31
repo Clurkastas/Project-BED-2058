@@ -173,47 +173,32 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
 
-dat_raw <- dat_raw %>% 
-  mutate(unemp =  rowMeans(cbind(ad_unemp, bas_unemp, int_unemp), na.rm=T))
-#preparing for yoy plotting (not so useful, not enough data)
-econ_data <- dat_raw %>% select(country, year, gdpPercap, gini, unemp)
+ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
+  geom_bar(stat = "identity",position = "dodge") #+
+  geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
+  
+  
 
-econ_data <- econ_data[ which(econ_data$country=="Norway"|
-                                econ_data$country=="Singapore"|
-                                econ_data$country=="Ireland"),]
-econ_data <- econ_data %>% dplyr::distinct(country, year, gdpPercap, gini, unemp)
-#fixing
-colnames(econ_data)[2] <- "year"
-as.character(econ_data$year)
-as.Date(as.character(econ_data$year),format="%Y)
-#3 graphs
-p1econ <- ggplot() + 
-  geom_line(aes(y = unemp, x = year, color = country),
-      data = econ_data, stat="identity") +
-  labs(x="year", y="unemployment rate") +
-  ggtitle("Unemployment rate during the years") + scale_y_continuous(limits = c(0,20)) + scale_x_continuous(limits = c(2000,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=unemp, x=year, color = country), data = econ_data) +
-           theme(legend.title=element_blank())
-
-p2econ <- ggplot() + 
-  geom_point(aes(y = gdpPercap, x = year, color = country),
-      data = econ_data, stat="identity") +
-  labs(x="year", y="Gdp per Capita") +
-  ggtitle("Gdp during the years") + scale_y_continuous(limits = c(0,60000)) + scale_x_continuous(limits = c(1970,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=gdpPercap, x=year, color = country), data = econ_data) +
-           theme(legend.title=element_blank())
-
-p3econ <- ggplot() + 
-  geom_point(aes(y = gini, x = year, color = country),
-      data = econ_data, stat="identity") +
-  labs(x="year", y="Gini rate") +
-  ggtitle("Gini rate during the years") + scale_y_continuous(limits = c(20,40)) + scale_x_continuous(limits = c(2000,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=gini, x=year, color = country), data = econ_data) +
-           theme(legend.title=element_blank())
-#put together
-library(ggpubr)
-figure_econ <- ggarrange(p1econ, p2econ, p3econ,
-                    labels = c("A", "B", "C"),
-                    ncol = 1, nrow = 3)
-figure_econ
-
+  
+ep1 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = gini,
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()
+  
+ep2 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = unemp, 
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()  
+  
+  
+ep3 <-  temp %>% 
+  ggplot(aes(x = gini, y = unemp, 
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()  
+  
 
 
 ```
