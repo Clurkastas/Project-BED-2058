@@ -148,6 +148,7 @@ ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
 
+<<<<<<< HEAD
 dat_raw <- dat_raw %>% 
   mutate(unemp =  rowMeans(cbind(ad_unemp, bas_unemp, int_unemp), na.rm=T))
 #preparing for yoy plotting (not so useful, not enough data)
@@ -188,7 +189,34 @@ figure_econ <- ggarrange(p1econ, p2econ, p3econ,
                     labels = c("A", "B", "C"),
                     ncol = 1, nrow = 3)
 figure_econ
+=======
+ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
+  geom_bar(stat = "identity",position = "dodge") #+
+  geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
+  
+  
+>>>>>>> aef0621884a60577793cf7c3f8296d14ba385858
 
+  
+ep1 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = gini,
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()
+  
+ep2 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = unemp, 
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()  
+  
+  
+ep3 <-  temp %>% 
+  ggplot(aes(x = gini, y = unemp, 
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()  
+  
 
 
 ```
