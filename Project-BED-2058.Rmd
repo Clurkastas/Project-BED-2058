@@ -14,7 +14,7 @@ rm(list=ls()) #delete workspace
 knitr::opts_chunk$set(echo = F, include = F, warning=F, error=F)
 
 ### Cleaning and Visualizing
-library(ggmap) #this way we can visualize data on maps (-> world map)
+library(maps) #this way we can visualize data on maps (-> world map)
 library(tidyverse) #basic cleaning/ organising functions
 library(plotrix) #3D pie chart
 
@@ -119,6 +119,20 @@ temp %>%
   ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
   geom_point() +
   geom_smooth(col="blue", method = 'lm')
+
+#world map
+thismap <- map_data("world")
+temp2 <- temp[,c("country","meta")]
+temp2$country <- as.character(temp2$country)
+temp2$country[temp2$country=="United States"] <- "USA"
+temp2$country[temp2$country=="United Kingdom"] <- "UK"
+thismap <- left_join(thismap, temp2, 
+                     by = c("region" = "country")) 
+ggplot(thismap, aes(long, lat, group=group, fill=meta)) +
+  scale_fill_gradient(limits=range(thismap$meta), low="violetred2", high="chartreuse") + 
+  geom_polygon(show.legend = T) +
+  scale_y_continuous(limits = c(-60,max(thismap$lat)))
+
 ```
 
 What this method does?

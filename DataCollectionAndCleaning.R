@@ -121,7 +121,7 @@ names(dat) <- c("country","continent","iso_alpha","iso_num",
 
 #C: make dataset smaller
 #C1: delete countries without continent (like Europe, Virgin Islands, ...)
-europe <- "Andorra|Belarus|Cyprus|Latvia|Liechtenstein|Lithuania|Luxembourg|Malta|Moldova|Monaco|Russia|Estonia|Kosovo|Ukraine|North Macedonia"
+europe <- "Andorra|Belarus|Cyprus|Greenland|Latvia|Liechtenstein|Lithuania|Luxembourg|Malta|Moldova|Monaco|Russia|Estonia|Kosovo|Ukraine|North Macedonia"
 dat$continent[stringr::str_detect(dat$country,europe)==T] <- "Europe"
 africa <- "Eswatini|Egypt|South Sudan|Gambia|Seychelles|Cabo Verde"
 dat$continent[stringr::str_detect(dat$country,africa)==T] <- "Africa"
