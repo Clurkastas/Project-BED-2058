@@ -185,7 +185,7 @@ econ_data <- econ_data %>% dplyr::distinct(country, year, gdpPercap, gini, unemp
 #fixing
 colnames(econ_data)[2] <- "year"
 as.character(econ_data$year)
-as.Date(as.character(econ_data$year),format="%Y)
+as.Date(as.character(econ_data$year),format="%Y")
 #3 graphs
 p1econ <- ggplot() + 
   geom_line(aes(y = unemp, x = year, color = country),
@@ -208,7 +208,6 @@ p3econ <- ggplot() +
   ggtitle("Gini rate during the years") + scale_y_continuous(limits = c(20,40)) + scale_x_continuous(limits = c(2000,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=gini, x=year, color = country), data = econ_data) +
            theme(legend.title=element_blank())
 #put together
-library(ggpubr)
 figure_econ <- ggarrange(p1econ, p2econ, p3econ,
                     labels = c("A", "B", "C"),
                     ncol = 1, nrow = 3)
@@ -225,18 +224,32 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   geom_text(aes(label=country, y = secu/2), size = 5, angle = 90) +
   labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for safety") +
   scale_y_continuous(limits =  c(-3.2,1))
+```
+This graph shows us top 10 best countries, where people can feel them calm and top 10 worst countries for safety.
+We ranked them by continents. After we separated safety for 3 variables and made 2 plots.
 
+```{r}
 temp %>% 
   ggplot(aes(x = mor_hyg, y = poison,
              col = continent)) +
   geom_point() +
-  geom_text(dat=temp[temp$worst10==1,], aes(label=country))
-
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(road), y = road,  fill = continent)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = road/2), size = 5, angle = 90)
-
+  geom_text(dat=temp[temp$worst10==1,], aes(label=country)) +
+  labs(x = "Mortality due to lack of hygiene", y = "Mortality due to unintentional poisoning", title = "Mortality due to lack of hygiene and unintentional poisoning (per 100,000 population)")
 ```
+This graph shows us the rate of mortality due to 2 reasons: mortality due to lack of hygiene and mortality due to unintentional poisoning. It is clearly seen, that African countries are leaders in mortality in both categories.
+
+```{r}
+temp2 <- temp[c(1:10,(length(temp$country)-10):length(temp$country)),] %>%
+  mutate(rank = rank(road))
+temp2$rank[temp2$country=="Japan"] <- 5
+temp2$rank[temp2$country=="Ireland"] <- 6
+
+ggplot(data = temp2, mapping = aes(x = rank, y = road,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = road/2), size = 5, angle = 90) +
+   labs(x = "Countries", y = "Mortality on roads", title = "Top 10 best and top 10 worst countries for mortality caused by road traffic injury (per 100,000 people)")
+```
+This graph shows us the rate of mortality caused by road traffic injury. We put on the graph top 10 best and top 10 worst countries according to this indicator. African countries have high level of road mortality. For example, in Burundi, Congo Dem. Rep., Central African Republic, Cameron and South Sudan >= 30 out of 100,000 people die on roads. As for top best 8 counties, less than 5 out of 100,000 people die on roads.
 
 ## Educational variables Lucas
 ```{r, include = T}
@@ -265,16 +278,14 @@ temp_ed %>%
 
 ## Environmental variables Kirill
 ```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(envir), y = envir,  fill = continent)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = envir/2), size = 5, angle = 90) +
-    labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for environment")
-
 temp %>% 
   ggplot(aes(x = CO2, y = air,
              col = continent)) +
   geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
-  geom_point()
+  geom_point() +
+  labs(x = "CO2 emissions", y = "Air pollution, micrograms/cubic meter", title = "Environment in different countries, ranked by continents and 2 variables")
 ```
+This graph shows us environmental situations in different countries. Almost all African countries have a high degree of air pollution, but low CO2 emissions. The situation with european countries is completely different. They have a high level of CO2 emissions and not as much air pollution as African countries.
+This may be due to the fact that CO2 emissions in Europe are less toxic due to various technologies that reduce air pollution. There are no such technologies in Africa.
 
 # Conclussion
