@@ -101,7 +101,7 @@ dat$country[dat$country=="Venezuela, RB"]   <- "Venezuela"
 dat$country[dat$country=="Gambia, The"]   <- "Gambia"
 dat$country[dat$country=="Micronesia, Fed. Sts."]   <- "Micronesia"
 dat$country[dat$country=="Bahamas, The"]   <- "Bahamas"
-
+dat$country[dat$country=="Yemen, Rep."] <- "Yemen"
 
 dat <- full_join(dat_gap[,c(1,3:6)], dat, by=c("country","year"))
 dat <- full_join(dat_gap[,c(1:2,7:length(dat_gap))], dat, by="country")#

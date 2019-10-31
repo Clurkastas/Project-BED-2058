@@ -11,12 +11,13 @@ editor_options:
 
 ```{r setup, include=FALSE}
 rm(list=ls()) #delete workspace
-knitr::opts_chunk$set(echo = F, include = F, warning=F, error=F)
+knitr::opts_chunk$set(echo = F, include = T, warning=F, error=F)
 
 ### Cleaning and Visualizing
 library(maps) #this way we can visualize data on maps (-> world map)
 library(tidyverse) #basic cleaning/ organising functions
 library(plotrix) #3D pie chart
+library(ggpubr) #chart mattia
 
 #load data
 #data was gathered and cleand in "DataCollectionAndCleaning.R"
@@ -76,62 +77,38 @@ How is it distributed over the continents?
 
 
 # Data Analysis
-```{r analysis Lucas}
 
-dat_wide %>% 
-  ggplot(aes(x=educ, y=health,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-
-dat_wide %>% 
-  ggplot(aes(x=educ, y=envir,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-
-dat_wide %>% 
-  ggplot(aes(x=educ, y=econ,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-
-dat_wide %>% 
-  ggplot(aes(x=educ, y=secu,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-```
-
-```{r analysis Mattia}
-
-```
-
-```{r analysis Kirill, include = T}
+```{r analysis beginning, include = T}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
   arrange(-meta) %>%
   mutate(worst10 = as.factor(ifelse(rank(meta)<=10,1,0)),
          top10 = as.factor(ifelse(rank(meta)>=(length(meta)-10),1,0)))
 
-#meta and population
-temp %>%
-  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'lm')
-
 #world map
 thismap <- map_data("world")
+thismap$region[thismap$region=="Democratic Republic of the Congo"] <- "Congo, Dem. Rep."
+thismap$region[thismap$region=="Republic of Congo"] <- "Congo, Rep."
 temp2 <- temp[,c("country","meta")]
 temp2$country <- as.character(temp2$country)
 temp2$country[temp2$country=="United States"] <- "USA"
 temp2$country[temp2$country=="United Kingdom"] <- "UK"
-thismap <- left_join(thismap, temp2, 
+thismap2 <- full_join(thismap, temp2, 
                      by = c("region" = "country")) 
-ggplot(thismap, aes(long, lat, group=group, fill=meta)) +
-  scale_fill_gradient(limits=range(thismap$meta), low="violetred2", high="chartreuse") + 
+ggplot(thismap2, aes(long, lat, group=group, fill=meta), color = "white") +
+  scale_fill_gradient(limits=range(thismap2$meta), low="red", high="green", na.value = "white") + 
   geom_polygon(show.legend = T) +
-  scale_y_continuous(limits = c(-60,max(thismap$lat)))
+  scale_y_continuous(limits = c(-60,max(thismap$lat))) + 
+  coord_fixed(1.3) + #this makes the right proportions for the image
+  theme(panel.background = element_rect(fill = 'lightblue', colour = 'black'))+
+  ggtitle("Life Quality across the World")
+
+#meta and population
+temp %>%
+  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'lm') +
+  ggtitle("Life Quality dependend on Population Size")
 
 ```
 
@@ -148,9 +125,10 @@ third is Singapore. On the bottom of our rating is located Chad.
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(meta), y = meta,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = meta/2), size = 5, angle = 90) +
-labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for living")
+labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
 
 ```
+
 This graph shows us top 10 best countries for living and top 10 worst countries. We ranked them by continents.
 
 ## Health Variables Lucas
@@ -169,52 +147,33 @@ temp %>% ggplot(aes(x=surv_65m,y=surv_65f, col=continent)) +
 
 ## Economic Variables Mattia
 ```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
+ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
 
-dat_raw <- dat_raw %>% 
-  mutate(unemp =  rowMeans(cbind(ad_unemp, bas_unemp, int_unemp), na.rm=T))
-#preparing for yoy plotting (not so useful, not enough data)
-econ_data <- dat_raw %>% select(country, year, gdpPercap, gini, unemp)
+ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
+  geom_bar(stat = "identity",position = "dodge") #+
+  geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
+  
 
-econ_data <- econ_data[ which(econ_data$country=="Norway"|
-                                econ_data$country=="Singapore"|
-                                econ_data$country=="Ireland"),]
-econ_data <- econ_data %>% dplyr::distinct(country, year, gdpPercap, gini, unemp)
-#fixing
-colnames(econ_data)[2] <- "year"
-as.character(econ_data$year)
-as.Date(as.character(econ_data$year),format="%Y")
-#3 graphs
-p1econ <- ggplot() + 
-  geom_line(aes(y = unemp, x = year, color = country),
-      data = econ_data, stat="identity") +
-  labs(x="year", y="unemployment rate") +
-  ggtitle("Unemployment rate during the years") + scale_y_continuous(limits = c(0,20)) + scale_x_continuous(limits = c(2000,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=unemp, x=year, color = country), data = econ_data) +
-           theme(legend.title=element_blank())
-
-p2econ <- ggplot() + 
-  geom_point(aes(y = gdpPercap, x = year, color = country),
-      data = econ_data, stat="identity") +
-  labs(x="year", y="Gdp per Capita") +
-  ggtitle("Gdp during the years") + scale_y_continuous(limits = c(0,60000)) + scale_x_continuous(limits = c(1970,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=gdpPercap, x=year, color = country), data = econ_data) +
-           theme(legend.title=element_blank())
-
-p3econ <- ggplot() + 
-  geom_point(aes(y = gini, x = year, color = country),
-      data = econ_data, stat="identity") +
-  labs(x="year", y="Gini rate") +
-  ggtitle("Gini rate during the years") + scale_y_continuous(limits = c(20,40)) + scale_x_continuous(limits = c(2000,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=gini, x=year, color = country), data = econ_data) +
-           theme(legend.title=element_blank())
-#put together
-figure_econ <- ggarrange(p1econ, p2econ, p3econ,
-                    labels = c("A", "B", "C"),
-                    ncol = 1, nrow = 3)
-figure_econ
-
-
-
+ep1 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = gini,
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()
+  
+ep2 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = unemp, 
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()  
+  
+  
+ep3 <-  temp %>% 
+  ggplot(aes(x = gini, y = unemp, 
+             col = continent)) +
+  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_point()
 ```
 
 ## Safety Variables Kirill
@@ -225,6 +184,7 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for safety") +
   scale_y_continuous(limits =  c(-3.2,1))
 ```
+
 This graph shows us top 10 best countries, where people can feel them calm and top 10 worst countries for safety.
 We ranked them by continents. After we separated safety for 3 variables and made 2 plots.
 
@@ -236,6 +196,7 @@ temp %>%
   geom_text(dat=temp[temp$worst10==1,], aes(label=country)) +
   labs(x = "Mortality due to lack of hygiene", y = "Mortality due to unintentional poisoning", title = "Mortality due to lack of hygiene and unintentional poisoning (per 100,000 population)")
 ```
+
 This graph shows us the rate of mortality due to 2 reasons: mortality due to lack of hygiene and mortality due to unintentional poisoning. It is clearly seen, that African countries are leaders in mortality in both categories.
 
 ```{r}
@@ -249,6 +210,7 @@ ggplot(data = temp2, mapping = aes(x = rank, y = road,  fill = continent)) +
   geom_text(aes(label=country, y = road/2), size = 5, angle = 90) +
    labs(x = "Countries", y = "Mortality on roads", title = "Top 10 best and top 10 worst countries for mortality caused by road traffic injury (per 100,000 people)")
 ```
+
 This graph shows us the rate of mortality caused by road traffic injury. We put on the graph top 10 best and top 10 worst countries according to this indicator. African countries have high level of road mortality. For example, in Burundi, Congo Dem. Rep., Central African Republic, Cameron and South Sudan >= 30 out of 100,000 people die on roads. As for top best 8 counties, less than 5 out of 100,000 people die on roads.
 
 ## Educational variables Lucas
@@ -285,6 +247,7 @@ temp %>%
   geom_point() +
   labs(x = "CO2 emissions", y = "Air pollution, micrograms/cubic meter", title = "Environment in different countries, ranked by continents and 2 variables")
 ```
+
 This graph shows us environmental situations in different countries. Almost all African countries have a high degree of air pollution, but low CO2 emissions. The situation with european countries is completely different. They have a high level of CO2 emissions and not as much air pollution as African countries.
 This may be due to the fact that CO2 emissions in Europe are less toxic due to various technologies that reduce air pollution. There are no such technologies in Africa.
 
