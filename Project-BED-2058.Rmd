@@ -11,12 +11,13 @@ editor_options:
 
 ```{r setup, include=FALSE}
 rm(list=ls()) #delete workspace
-knitr::opts_chunk$set(echo = F, include = F, warning=F, error=F)
+knitr::opts_chunk$set(echo = F, include = T, warning=F, error=F)
 
 ### Cleaning and Visualizing
 library(maps) #this way we can visualize data on maps (-> world map)
 library(tidyverse) #basic cleaning/ organising functions
 library(plotrix) #3D pie chart
+library(ggpubr) #chart mattia
 
 #load data
 #data was gathered and cleand in "DataCollectionAndCleaning.R"
@@ -76,38 +77,8 @@ How is it distributed over the continents?
 
 
 # Data Analysis
-```{r analysis Lucas}
 
-dat_wide %>% 
-  ggplot(aes(x=educ, y=health,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-
-dat_wide %>% 
-  ggplot(aes(x=educ, y=envir,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-
-dat_wide %>% 
-  ggplot(aes(x=educ, y=econ,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-
-dat_wide %>% 
-  ggplot(aes(x=educ, y=secu,
-             col = continent, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'loess') 
-```
-
-```{r analysis Mattia}
-
-```
-
-```{r analysis Kirill, include = T}
+```{r analysis beginning, include = T}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
   arrange(-meta) %>%
@@ -122,14 +93,18 @@ temp %>%
 
 #world map
 thismap <- map_data("world")
+thismap$region[thismap$region=="Democratic Republic of the Congo"] <- "Congo, Dem. Rep."
+thismap$region[thismap$region=="Republic of Congo"] <- "Congo, Rep."
 temp2 <- temp[,c("country","meta")]
 temp2$country <- as.character(temp2$country)
 temp2$country[temp2$country=="United States"] <- "USA"
 temp2$country[temp2$country=="United Kingdom"] <- "UK"
-thismap <- left_join(thismap, temp2, 
+thismap2 <- full_join(thismap, temp2, 
                      by = c("region" = "country")) 
-ggplot(thismap, aes(long, lat, group=group, fill=meta)) +
-  scale_fill_gradient(limits=range(thismap$meta), low="violetred2", high="chartreuse") + 
+
+temp3 <- thismap2[is.na(thismap$meta),]
+ggplot(thismap2, aes(long, lat, group=group, fill=meta)) +
+  scale_fill_gradient(limits=range(thismap2$meta), low="red", high="green") + 
   geom_polygon(show.legend = T) +
   scale_y_continuous(limits = c(-60,max(thismap$lat)))
 
@@ -169,7 +144,7 @@ temp %>% ggplot(aes(x=surv_65m,y=surv_65f, col=continent)) +
 
 ## Economic Variables Mattia
 ```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
+ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
 
@@ -185,7 +160,7 @@ econ_data <- econ_data %>% dplyr::distinct(country, year, gdpPercap, gini, unemp
 #fixing
 colnames(econ_data)[2] <- "year"
 as.character(econ_data$year)
-as.Date(as.character(econ_data$year),format="%Y)
+as.Date(as.character(econ_data$year),format="%Y")
 #3 graphs
 p1econ <- ggplot() + 
   geom_line(aes(y = unemp, x = year, color = country),
@@ -208,7 +183,7 @@ p3econ <- ggplot() +
   ggtitle("Gini rate during the years") + scale_y_continuous(limits = c(20,40)) + scale_x_continuous(limits = c(2000,2020))+ theme(axis.text.x = element_text(angle = 90)) + geom_line(aes(y=gini, x=year, color = country), data = econ_data) +
            theme(legend.title=element_blank())
 #put together
-library(ggpubr)
+
 figure_econ <- ggarrange(p1econ, p2econ, p3econ,
                     labels = c("A", "B", "C"),
                     ncol = 1, nrow = 3)
@@ -265,7 +240,7 @@ temp_ed %>%
 
 ## Environmental variables Kirill
 ```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(envir), y = envir,  fill = continent)) +
+ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(envir), y = envir,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = envir/2), size = 5, angle = 90) +
     labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for environment")
