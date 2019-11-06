@@ -251,7 +251,8 @@ educ <- c("pri_ed","sec_ed","pri_mon","sec_mon")
 dat_wide <- dat_wide %>% 
   mutate(unemp =  rowMeans(cbind(ad_unemp, bas_unemp, int_unemp), na.rm=T))
 econ <- c("gdpPercap","gini","unemp")
-#health: is perfect
+#health: is perfect, but "mortality" doesnt fit (has to do with air pollution)
+health <- c("surv_65m","surv_65f","lifeExp","cook","child_mor")
 #security: murder doesnt fit, rest is good
 secu <- c("mor_hyg","road","poison") #redone :)
 #environment: nur CO2 und air geht

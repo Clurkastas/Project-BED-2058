@@ -18,6 +18,8 @@ library(maps) #this way we can visualize data on maps (-> world map)
 library(tidyverse) #basic cleaning/ organising functions
 library(plotrix) #3D pie chart
 library(ggpubr) #chart mattia
+library(DescTools) # %like% function
+library(kableExtra)
 
 #load data
 #data was gathered and cleand in "DataCollectionAndCleaning.R"
@@ -78,6 +80,47 @@ How is it distributed over the continents?
 
 # Data Analysis
 
+## Factor Analysis
+
+To find out which variables we could use properly, we sorted chosen variables from the gapminder dataset and the World Development Indicators (WDI) into our five overarching topics. Variables were selected on the basis of their quality, e.g. amount of missings and great enough variance. After sorting, we conducted a confirmatory factor analysis for each topic. Unfit variables were sorted out and are depicted in red in the table below. Factor scores were used for further analysis.
+
+```{r variables yeah}
+Health <- c("% Survival to age 65 (male)",
+            "% Survival to age 65 (female)",
+            "Life Expectancy",
+            "% Access to clean cooking",
+            "Child mortality per 1,000 live births")
+Economy <- c("GDP per capita","Gini Coefficient","Unemployment","","")
+Safety <- c("Mortality due to bad hygiene and unclean water per 1,000",
+            "Mortality due to traffic accidents per 1,000",
+            "Mortality due to unintended poisoning per 1,000","",
+            "Mortality due to homicide per 1,000")
+Education <- c("% of children in primary education",
+               "% of children in secondary education",
+               "% of students receive monetary support from government in primary education",
+               "% of students receive monetary support from government in secondary education",
+               "Male to female ratio in secondary education") #this one didn't make it
+Environment <- c("Air pollution",
+                 "CO2 emmissions","",
+                 "Level of water stress",  #this is out
+                 "Renewable internal freshwater resources per capita") #this is out
+topictable <- cbind(Health,Economy,Safety,Education,Environment)
+rm(Health,Economy,Safety,Education,Environment)
+
+#make table
+topictable %>% 
+  knitr::kable(format = "html", caption = "Life Quality Factors") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  row_spec(5, color = "red") %>%
+  column_spec(1, color = "black") %>%
+  column_spec(5, color = "red") %>%
+  row_spec(1:2, color = "black")
+```
+
+
+
+## General Life Quality
+
 ```{r analysis beginning, include = T}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
@@ -130,21 +173,38 @@ labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in L
 ```
 This graph shows us top 10 best countries for living and top 10 worst countries. We ranked them by continents.
 
-## Health Variables Lucas
-```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(health), y = health,  fill = continent)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = health/2), size = 5, angle = 90)
+## Health - Lucas
 
-health <- c("surv_65m","surv_65f","mortality","lifeExp","cook","child_mor")
+For measuring health we included five different variables: the percentage of people getting to the age of 65 seperate for men and women, the life expectancy, acces to clean cooking possibilities and child mortality. They are depicted in the plot below with the health factor on the x-axis and the individual variables on the y-axis. The top and bottom ten from the general life quality measurement are displayed as green and red points, respectively.
 
-temp %>% ggplot(aes(x=surv_65m,y=surv_65f, col=continent)) +
-  geom_point() +
-  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country))
+```{r health}
+health <- c("surv_65m","surv_65f","lifeExp","cook","child_mor")
+
+temp_h <- dat_long[str_detect(dat_long$variable,paste(health, collapse="|")),]
+temp_h <- left_join(temp_h,temp[,c("country","health","top10","worst10")],by="country") %>%
+  mutate(variable = as.factor(as.character(temp_h$variable)))
+levels(temp_h$variable) <- c("% of men surviving till age 65",
+                             "% of women surviving till age 65",
+                             "Life Expectancy",
+                             "% access for clean cooking",
+                             "Child mortality per 1,000 live births")
+levels(temp_h$variable) <- rev(levels(temp_h$variable))
+
+#graph
+temp_h %>%
+  ggplot(aes(x=health, y= measurement, label=country)) +
+  geom_point(col="grey") +
+  geom_point(dat=temp_h[temp_h$top10==1,], color="green") +
+  geom_point(dat=temp_h[temp_h$worst10==1,], color="darkred") +
+  geom_text(dat=temp_h[temp_h$worst10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
+  facet_wrap(~variable, scales = "free_y")
 
 ```
 
-## Economic Variables Mattia
+
+
+
+## Economy - Mattia
 ```{r}
 ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
   geom_bar(stat = "identity") +
@@ -179,7 +239,7 @@ ep3 <-  temp %>%
 
 ```
 
-## Safety Variables Kirill
+## Safety - Kirill
 ```{r}
 ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(secu), y = secu,  fill = continent)) +
   geom_bar(stat = "identity") +
@@ -199,32 +259,56 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
 
 ```
 
-## Educational variables Lucas
-```{r, include = T}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(educ), y = educ,  fill = continent)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = educ/2), size = 5, angle = 90)
+## Education
 
+For the topic of education, we looked at four variables. Specifically, two of them focus on primary education and the the other two focus on the same aspects in secondary education. The first pair of variables contains information about how many of the children, who have the age to be in that sort of education actually are attending school. The second pair focusses on how many of those students receive monetary payments from their government as a support. All four variables are depicted in the following plot.
+
+```{r, include = T}
 educ <- c("pri_ed","sec_ed","pri_mon","sec_mon")
 temp_ed <- dat_long[str_detect(dat_long$variable,paste(educ, collapse="|")),]
 temp_ed <- left_join(temp_ed,temp[,c("country","educ","top10","worst10")],by="country") %>%
   mutate(variable = as.factor(as.character(temp_ed$variable)))
 levels(temp_ed$variable) <- c("% of children in primary education",
-                              "% of students receiving money transfers from state for primary education",
+                              "% of students receiving govern. payments in pri. ed.",
                               "% of children in secondary education",
-                              "% of students receiving money transfers from state for secondary education")
+                              "% of students receiving govern. payments in sec. ed.")
 
 #graph
 temp_ed %>%
   ggplot(aes(x=educ, y= measurement, label=country)) +
   geom_point(col="grey") +
-  geom_text(dat=temp_ed[temp_ed$top10==1,], aes(label=country), color="green", size=3)+
-  geom_text(dat=temp_ed[temp_ed$worst10==1,], aes(label=country), color="red", size=3) +
-  facet_wrap(~variable)
+  geom_point(dat=temp_ed[temp_ed$top10==1,], color="green") +
+  geom_text(dat=temp_ed[temp_ed$top10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="darkgreen", size=3) +
+  geom_point(dat=temp_ed[temp_ed$worst10==1,], color="darkred")+
+  geom_text(dat=temp_ed[temp_ed$worst10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
+  facet_wrap(~variable, scales = "free_y")
+
+pri_ed_btm_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in primary education"&temp_ed$worst10==1]) %>% round(digits=2)
+sec_ed_btm_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"&temp_ed$worst10==1]) %>% round(digits=2)
+sec_ed_top_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"&temp_ed$top10==1]) %>% round(digits=2)
+pay_btm <- temp_ed %>%
+  filter(nchar(as.character(variable)) > 40) %>%
+  filter(worst10==1) %>% 
+  mutate(measurement = round(measurement, digits=2),
+         country = as.character(country))
+pay_top <- temp_ed %>%
+  filter(nchar(as.character(variable)) > 40) %>%
+  filter(top10==1) %>% 
+  mutate(measurement = round(measurement, digits=2),
+         country = as.character(country))
 
 ```
 
-## Environmental variables Kirill
+In the above plot, you can see the constructed education variable on the x-axis and each of the single variables on the y-axis. As you can see in the upper left block, in the top ten countries almost every child is enrolled in primary education. However, the bottom ten have a larger variance ranging from `r pri_ed_btm_range[1]` to `r pri_ed_btm_range[2]` percent. As a general mean across all countries `r mean(temp_ed$measurement[temp_ed$variable=="% of children in primary education"]) %>% round(digits=2)` percent of children attend in primary education.
+
+The general distrubution of children attend school is way more variant in secondary education. The mean here is `r mean(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"]) %>% round(digits=2)` percent. That is a big difference to primary education which is also reflected by the distribution of the top and bottom ten countries. The top ten countries attendance percentage in secondary education ranges from `r sec_ed_top_range[1]` to `r sec_ed_top_range[2]`, while the bottom tens attendance range lies between `r sec_ed_btm_range[1]` and `r sec_ed_btm_range[2]` percent.
+
+In both variables for governmental payments for students, the bottom ten countries are really low on the scale. The highest of those values is `r max(pay_btm$measurement)` percent of students receiving payments in `r pay_btm$country[max(pay_btm$measurement)]` while the lowest is `r min(pay_btm$measurement)` percent in `r pay_btm$country[min(pay_btm$measurement)]`. The top ten countries are giving monetary payments to more students with also a higher variance. The highest of those values is `r max(pay_top$measurement)` percent in `r pay_top$country[max(pay_top$measurement)]` while the lowest is `r min(pay_top$measurement)` percent in `r pay_top$country[min(pay_top$measurement)]`.
+
+So in an educational view on this topic, it is definitely better to live in the top ten countries because you're probability of attending school and receiving monetary support is higher.
+
+
+## Environment - Kirill
 ```{r}
 ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(envir), y = envir,  fill = continent)) +
   geom_bar(stat = "identity") +
@@ -239,3 +323,6 @@ temp %>%
 ```
 
 # Conclussion
+
+
+# Sources

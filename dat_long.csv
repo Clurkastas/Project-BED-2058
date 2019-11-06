@@ -4513,189 +4513,189 @@
 "4512","West Bank and Gaza","Asia","PSE",275,"#CFB6D8","#313695","PS","envir",-0.502255571507828
 "4513","Zambia","Africa","ZMB",894,"#D77911","#276419","ZM","envir",-0.403959445252606
 "4514","Zimbabwe","Africa","ZWE",716,"#CC6F0D","#7F3B08","ZW","envir",-0.192881315743307
-"4515","Afghanistan","Asia","AFG",4,"#874D96","#313695","AF","health",-1.20735652588749
-"4516","Albania","Europe","ALB",8,"#D2ECB1","#A50026","AL","health",0.885861360925022
-"4517","Algeria","Africa","DZA",12,"#A34F06","#313695","DZ","health",0.487404032858041
-"4518","American Samoa","Oceania",NA,NA,NA,NA,"AS","health",0.321898388292023
-"4519","Angola","Africa","AGO",24,"#C96C0C","#313695","AO","health",-1.45875319544173
-"4520","Antigua and Barbuda","Americas",NA,NA,NA,NA,"AG","health",0.596314183860444
-"4521","Argentina","Americas","ARG",32,"#C62026","#A50026","AR","health",0.615342449731407
-"4522","Armenia","Asia",NA,NA,NA,NA,"AM","health",0.610124478549888
-"4523","Australia","Oceania","AUS",36,"#313695","#7F3B08","AU","health",1.16076931682494
-"4524","Austria","Europe","AUT",40,"#92C858","#40004B","AT","health",1.07413675904172
-"4525","Azerbaijan","Asia",NA,NA,NA,NA,"AZ","health",0.320668890042175
-"4526","Bahamas","Americas",NA,NA,NA,NA,"BS","health",0.296733639362224
-"4527","Bahrain","Asia","BHR",48,"#E7D4E8","#313695","BH","health",0.802465085768522
-"4528","Bangladesh","Asia","BGD",50,"#5B1567","#A50026","BD","health",-0.154910190319403
-"4529","Barbados","Americas",NA,NA,NA,NA,"BB","health",0.529583421345278
-"4530","Belarus","Europe",NA,NA,NA,NA,"BY","health",0.599845953574865
-"4531","Belgium","Europe","BEL",56,"#6DAD35","#40004B","BE","health",1.01284454731096
-"4532","Belize","Americas",NA,NA,NA,NA,"BZ","health",0.217325687390537
-"4533","Benin","Africa","BEN",204,"#EA952F","#7F3B08","BJ","health",-1.42174898446363
-"4534","Bhutan","Asia",NA,NA,NA,NA,"BT","health",-0.551756258573214
-"4535","Bolivia","Americas","BOL",68,"#F57748","#7F3B08","BO","health",-0.283934340315877
-"4536","Bosnia and Herzegovina","Europe","BIH",70,"#BFE492","#276419","BA","health",0.753813187637109
-"4537","Botswana","Africa","BWA",72,"#FDC37B","#40004B","BW","health",-0.483410499800564
-"4538","Brazil","Americas","BRA",76,"#AD0826","#276419","BR","health",0.432717526965049
-"4539","Brunei Darussalam","Asia",NA,NA,NA,NA,"BN","health",0.439403475973944
-"4540","Bulgaria","Europe","BGR",100,"#8AC34F","#A50026","BG","health",0.530694916009183
-"4541","Burkina Faso","Africa","BFA",854,"#BE6209","#A50026","BF","health",-1.50654102829079
-"4542","Burundi","Africa","BDI",108,"#E79029","#313695","BI","health",-1.52450081055098
-"4543","Cabo Verde","Africa",NA,NA,NA,NA,"CV","health",0.326916011632096
-"4544","Cambodia","Asia","KHM",116,"#B797C6","#313695","KH","health",-0.336519628360878
-"4545","Cameroon","Africa","CMR",120,"#BA5F08","#7F3B08","CM","health",-1.84344254586577
-"4546","Canada","Americas","CAN",124,"#CE2726","#40004B","CA","health",1.06765383574321
-"4547","Central African Republic","Africa","CAF",140,"#F5AA4E","#7F3B08","CF","health",-2.72588363121747
-"4548","Chad","Africa","TCD",148,"#DE8013","#7F3B08","TD","health",-2.43886920278436
-"4549","Chile","Americas","CHL",152,"#E04430","#7F3B08","CL","health",0.875303314846986
-"4550","China","Asia","CHN",156,"#40004B","#40004B","CN","health",0.676622804386831
-"4551","Colombia","Americas","COL",170,"#BE1826","#7F3B08","CO","health",0.570583668871953
-"4552","Comoros","Africa","COM",174,"#FDD6A2","#276419","KM","health",-1.05495237085491
-"4553","Congo, Dem. Rep.","Africa","COD",180,"#8B4107","#276419","CD","health",-1.63700614828036
-"4554","Congo, Rep.","Africa","COG",178,"#F7AE55","#A50026","CG","health",-1.17793667089333
-"4555","Costa Rica","Americas","CRI",188,"#FDB668","#A50026","CR","health",0.879682875426075
-"4556","Cote d'Ivoire","Africa","CIV",384,"#B75C07","#313695","CI","health",-2.20196131044508
-"4557","Croatia","Europe","HRV",191,"#C6E79C","#313695","HR","health",0.910172026077722
-"4558","Cuba","Americas","CUB",192,"#EF623E","#276419","CU","health",0.713968932372859
-"4559","Cyprus","Europe",NA,NA,NA,NA,"CY","health",1.09949058294912
-"4560","Czech Republic","Europe","CZE",203,"#7BB93E","#313695","CZ","health",0.932752269743653
-"4561","Denmark","Europe","DNK",208,"#A2D26B","#313695","DK","health",0.974213440709346
-"4562","Djibouti","Africa","DJI",262,"#FDDCAF","#7F3B08","DJ","health",-0.858023689256163
-"4563","Dominican Republic","Americas","DOM",214,"#F46D43","#313695","DO","health",0.141793525660107
-"4564","Ecuador","Americas","ECU",218,"#E54E35","#A50026","EC","health",0.518581196200958
-"4565","Egypt","Africa","EGY",818,"#833D07","#A50026","EG","health",0.111533331501247
-"4566","El Salvador","Americas","SLV",222,"#FA9856","#276419","SV","health",0.29316387296747
-"4567","Equatorial Guinea","Africa","GNQ",226,"#FDD9A8","#313695","GQ","health",-1.95162833838735
-"4568","Eritrea","Africa","ERI",232,"#F3A548","#313695","ER","health",-1.00254192113053
-"4569","Estonia","Europe",NA,NA,NA,NA,"EE","health",0.84144741992462
-"4570","Eswatini","Africa",NA,NA,NA,NA,"SZ","health",-1.52644122676536
-"4571","Ethiopia","Africa","ETH",231,"#873F07","#40004B","ET","health",-0.896234775388853
-"4572","Fiji","Oceania",NA,NA,NA,NA,"FJ","health",-0.481689073889187
-"4573","Finland","Europe","FIN",246,"#B2DD7E","#A50026","FI","health",1.09532573991477
-"4574","France","Europe","FRA",250,"#31701B","#40004B","FR","health",1.06267528505947
-"4575","Gabon","Africa","GAB",266,"#FDCA88","#313695","GA","health",-0.691318822519255
-"4576","Gambia","Africa","GMB",270,"#FDC074","#A50026","GM","health",-1.33247208000608
-"4577","Georgia","Asia",NA,NA,NA,NA,"GE","health",0.483993634247349
-"4578","Germany","Europe","DEU",276,"#276419","#7F3B08","DE","health",1.04003647014356
-"4579","Ghana","Africa","GHA",288,"#AB5406","#A50026","GH","health",-1.11125831831096
-"4580","Greece","Europe","GRC",300,"#599C28","#313695","GR","health",1.09474664283075
-"4581","Grenada","Americas",NA,NA,NA,NA,"GD","health",0.192884549574113
-"4582","Guatemala","Americas","GTM",320,"#EA5839","#40004B","GT","health",0.122350668651934
-"4583","Guinea","Africa","GIN",324,"#E18417","#A50026","GN","health",-1.5938966921228
-"4584","Guinea-Bissau","Africa","GNB",624,"#FDC681","#276419","GW","health",-2.02975829247757
-"4585","Guyana","Americas",NA,NA,NA,NA,"GY","health",-0.409558668106709
-"4586","Haiti","Americas","HTI",332,"#F7824D","#A50026","HT","health",-1.11985997669218
-"4587","Honduras","Americas","HND",340,"#F88D51","#40004B","HN","health",0.200308678158595
-"4588","Hong Kong, China","Asia","HKG",344,"#BC9ECA","#7F3B08",NA,"health",0.40506793766108
-"4589","Hungary","Europe","HUN",348,"#5FA12D","#7F3B08","HU","health",0.614945549934721
-"4590","Iceland","Europe","ISL",352,"#E6F5D0","#313695","IS","health",1.18658114989512
-"4591","India","Asia","IND",356,"#460552","#276419","IN","health",-0.498996589474721
-"4592","Indonesia","Asia","IDN",360,"#4D0A59","#313695","ID","health",-0.0351398254251177
-"4593","Iran","Asia","IRN",364,"#762A83","#7F3B08","IR","health",0.767092964817725
-"4594","Iraq","Asia","IRQ",368,"#9467A5","#40004B","IQ","health",-0.139896063418081
-"4595","Ireland","Europe","IRL",372,"#CCE9A7","#7F3B08","IE","health",1.0704171530202
-"4596","Israel","Asia","ISR",376,"#C2A5CF","#A50026","IL","health",1.16095368981767
-"4597","Italy","Europe","ITA",380,"#3B7D1D","#313695","IT","health",1.1876245996031
-"4598","Jamaica","Americas","JAM",388,"#FDD788","#7F3B08","JM","health",0.324513789613543
-"4599","Japan","Asia","JPN",392,"#611A6D","#40004B","JP","health",1.23274737235509
-"4600","Jordan","Asia","JOR",400,"#C6AAD2","#40004B","JO","health",0.437276165753443
-"4601","Kazakhstan","Asia",NA,NA,NA,NA,"KZ","health",0.388175222901357
-"4602","Kenya","Africa","KEN",404,"#9B4A06","#40004B","KE","health",-0.808489188741037
-"4603","Kiribati","Oceania",NA,NA,NA,NA,"KI","health",-0.510942392912588
-"4604","Korea, Rep.","Asia","KOR",410,"#7E3B8C","#40004B","KR","health",1.21355098202114
-"4605","Kuwait","Asia","KWT",414,"#E2CEE4","#276419","KW","health",0.830252601635353
-"4606","Latvia","Europe",NA,NA,NA,NA,"LV","health",0.511612019737839
-"4607","Lebanon","Asia","LBN",422,"#D4BCDB","#7F3B08","LB","health",0.845583831326451
-"4608","Lesotho","Africa","LSO",426,"#FDBD6E","#7F3B08","LS","health",-2.69610669628679
-"4609","Liberia","Africa","LBR",430,"#FCB661","#276419","LR","health",-1.28860225177926
-"4610","Libya","Africa","LBY",434,"#EE9D3C","#40004B","LY","health",0.344859140359173
-"4611","Lithuania","Europe",NA,NA,NA,NA,"LT","health",0.587027736659435
-"4612","Luxembourg","Europe",NA,NA,NA,NA,"LU","health",1.03284046440092
-"4613","Madagascar","Africa","MDG",450,"#B35806","#276419","MG","health",-0.819598692838302
-"4614","Malawi","Africa","MWI",454,"#C2650A","#40004B","MW","health",-1.12843368224914
-"4615","Malaysia","Asia","MYS",458,"#9970AB","#276419","MY","health",0.583791841404104
-"4616","Maldives","Asia",NA,NA,NA,NA,"MV","health",0.94031332391678
-"4617","Mali","Africa","MLI",466,"#D37610","#40004B","ML","health",-1.75042448430672
-"4618","Malta","Europe",NA,NA,NA,NA,"MT","health",1.0691467080933
-"4619","Mauritania","Africa","MRT",478,"#FAB25B","#40004B","MR","health",-0.93291844873932
-"4620","Mauritius","Africa","MUS",480,"#FDCD8E","#7F3B08","MU","health",0.402131316660145
-"4621","Mexico","Americas","MEX",484,"#B51026","#313695","MX","health",0.406703706511751
-"4622","Micronesia","Oceania",NA,NA,NA,NA,"FM","health",-0.374783308113146
-"4623","Moldova","Europe",NA,NA,NA,NA,"MD","health",0.217258092210559
-"4624","Mongolia","Asia","MNG",496,"#DDC8E1","#40004B","MN","health",-0.158602974793457
-"4625","Montenegro","Europe","MNE",499,"#DFF2C5","#276419","ME","health",0.718098984173852
-"4626","Morocco","Africa","MAR",504,"#9F4D06","#276419","MA","health",0.655357399258848
-"4627","Mozambique","Africa","MOZ",508,"#AF5606","#40004B","MZ","health",-1.71106914934936
-"4628","Myanmar","Asia","MMR",104,"#834492","#276419","MM","health",-0.58745412940408
-"4629","Namibia","Africa","NAM",516,"#FDBA67","#313695","NA","health",-1.23656382063188
-"4630","Nepal","Asia","NPL",524,"#8B559B","#7F3B08","NP","health",-0.28862241468247
-"4631","Netherlands","Europe","NLD",528,"#529624","#276419","NL","health",1.1086141816081
-"4632","New Zealand","Oceania","NZL",554,"#4575B4","#A50026","NZ","health",1.06484926502549
-"4633","Nicaragua","Americas","NIC",558,"#FDAE61","#7F3B08","NI","health",0.257957905276071
-"4634","Niger","Africa","NER",562,"#C5690B","#276419","NE","health",-1.37529342720722
-"4635","Nigeria","Africa","NGA",566,"#7F3B08","#7F3B08","NG","health",-2.49147732497659
-"4636","North Macedonia","Europe",NA,NA,NA,NA,"MK","health",0.61940937024711
-"4637","Norway","Europe","NOR",578,"#B9E188","#40004B","NO","health",1.11995477980526
-"4638","Oman","Asia","OMN",512,"#D9C2DE","#A50026","OM","health",0.702621049801488
-"4639","Pakistan","Asia","PAK",586,"#540F60","#7F3B08","PK","health",-0.701988861980588
-"4640","Panama","Americas","PAN",591,"#FDCF80","#313695","PA","health",0.621847177246145
-"4641","Papua New Guinea","Oceania",NA,NA,NA,NA,"PG","health",-0.884477637074714
-"4642","Paraguay","Americas","PRY",600,"#FBA35B","#313695","PY","health",0.150054865687485
-"4643","Peru","Americas","PER",604,"#D73027","#276419","PE","health",0.495991665065651
-"4644","Philippines","Asia","PHL",608,"#681F75","#276419","PH","health",-0.121918045784916
-"4645","Poland","Europe","POL",616,"#468A1F","#A50026","PL","health",0.814161000539883
-"4646","Portugal","Europe","PRT",620,"#66A731","#A50026","PT","health",1.11462045748236
-"4647","Puerto Rico","Americas","PRI",630,"#FDBE70","#40004B","PR","health",0.792139680734803
-"4648","Qatar","Asia",NA,NA,NA,NA,"QA","health",0.989051637016262
-"4649","Romania","Europe","ROU",642,"#4B9020","#40004B","RO","health",0.593278863916839
-"4650","Russia","Europe",NA,NA,NA,NA,"RU","health",0.306141338950421
-"4651","Rwanda","Africa","RWA",646,"#E58C23","#276419","RW","health",-0.618451640850199
-"4652","Samoa","Oceania",NA,NA,NA,NA,"WS","health",0.375760015432804
-"4653","Sao Tome and Principe","Africa","STP",678,"#FEE0B6","#A50026","ST","health",-0.199410244595813
-"4654","Saudi Arabia","Asia","SAU",682,"#905EA1","#A50026","SA","health",0.497399693811692
-"4655","Senegal","Africa","SEN",686,"#D0730F","#A50026","SN","health",-0.47833724714766
-"4656","Serbia","Europe","SRB",688,"#74B33A","#276419","RS","health",0.626201465314922
-"4657","Seychelles","Africa",NA,NA,NA,NA,"SC","health",0.354061167776355
-"4658","Sierra Leone","Africa","SLE",694,"#EC9936","#A50026","SL","health",-2.67575014229981
-"4659","Singapore","Asia","SGP",702,"#CBB0D5","#276419","SG","health",1.18715704629707
-"4660","Slovak Republic","Europe","SVK",703,"#AAD875","#7F3B08","SK","health",0.790515112402351
-"4661","Slovenia","Europe","SVN",705,"#D9EFBB","#40004B","SI","health",1.05435351513173
-"4662","Solomon Islands","Oceania",NA,NA,NA,NA,"SB","health",0.00461994465096975
-"4663","Somalia","Africa","SOM",706,"#E3881D","#40004B","SO","health",-2.04918399771166
-"4664","South Africa","Africa","ZAF",710,"#8F4407","#313695","ZA","health",-1.11944671588824
-"4665","South Sudan","Africa",NA,NA,NA,NA,"SS","health",-1.84222984760402
-"4666","Spain","Europe","ESP",724,"#41831E","#7F3B08","ES","health",1.20414849120269
-"4667","Sri Lanka","Asia","LKA",144,"#AD8ABD","#40004B","LK","health",0.732772069571722
-"4668","St. Lucia","Americas",NA,NA,NA,NA,"LC","health",0.380368271863307
-"4669","St. Vincent and the Grenadines","Americas",NA,NA,NA,NA,"VC","health",0.126639366809192
-"4670","Sudan","Africa","SDN",736,"#934607","#7F3B08","SD","health",-0.937952634919075
-"4671","Suriname","Americas",NA,NA,NA,NA,"SR","health",0.0946900664155821
-"4672","Sweden","Europe","SWE",752,"#82BE45","#7F3B08","SE","health",1.15728541161078
-"4673","Switzerland","Europe","CHE",756,"#9ACD62","#276419","CH","health",1.19559646547185
-"4674","Syria","Asia","SYR",760,"#B291C1","#276419","SY","health",0.481856333117412
-"4675","Tajikistan","Asia",NA,NA,NA,NA,"TJ","health",0.0296751998813364
-"4676","Tanzania","Africa","TZA",834,"#974807","#A50026","TZ","health",-0.98930948544849
-"4677","Thailand","Asia","THA",764,"#7A3288","#A50026","TH","health",0.563352213717208
-"4678","Timor-Leste","Asia",NA,NA,NA,NA,"TL","health",-0.271377361455565
-"4679","Togo","Africa","TGO",768,"#F1A142","#276419","TG","health",-1.54952618239508
-"4680","Tonga","Oceania",NA,NA,NA,NA,"TO","health",0.0416814298321263
-"4681","Trinidad and Tobago","Americas","TTO",780,"#FEE090","#A50026","TT","health",0.202374951625787
-"4682","Tunisia","Africa","TUN",788,"#DA7D12","#313695","TN","health",0.65201030938122
-"4683","Turkey","Europe","TUR",792,"#2C6A1A","#A50026","TR","health",0.737029700011891
-"4684","Turkmenistan","Asia",NA,NA,NA,NA,"TM","health",-0.30559688253555
-"4685","Uganda","Africa","UGA",800,"#A75106","#7F3B08","UG","health",-1.27123857619039
-"4686","Ukraine","Europe",NA,NA,NA,NA,"UA","health",0.311699441452308
-"4687","United Arab Emirates","Asia",NA,NA,NA,NA,"AE","health",0.742744712572167
-"4688","United Kingdom","Europe","GBR",826,"#36771C","#276419","GB","health",0.998359646478156
-"4689","United States","Americas","USA",840,"#A50026","#40004B","US","health",0.713761695896215
-"4690","Uruguay","Americas","URY",858,"#FDC778","#276419","UY","health",0.685002569930572
-"4691","Uzbekistan","Asia",NA,NA,NA,NA,"UZ","health",0.133182980441199
-"4692","Vanuatu","Oceania",NA,NA,NA,NA,"VU","health",0.0143148445507056
-"4693","Venezuela","Americas","VEN",862,"#DB3A2B","#313695","VE","health",0.243409616762636
-"4694","Vietnam","Asia","VNM",704,"#6F247B","#313695","VN","health",0.484165628527145
-"4695","West Bank and Gaza","Asia","PSE",275,"#CFB6D8","#313695","PS","health",0.356904022717046
-"4696","Zambia","Africa","ZMB",894,"#D77911","#276419","ZM","health",-1.24427471590766
-"4697","Zimbabwe","Africa","ZWE",716,"#CC6F0D","#7F3B08","ZW","health",-1.86380815934479
+"4515","Afghanistan","Asia","AFG",4,"#874D96","#313695","AF","health",-1.15005752104224
+"4516","Albania","Europe","ALB",8,"#D2ECB1","#A50026","AL","health",0.914748250997289
+"4517","Algeria","Africa","DZA",12,"#A34F06","#313695","DZ","health",0.485421759291045
+"4518","American Samoa","Oceania",NA,NA,NA,NA,"AS","health",0.318279700264389
+"4519","Angola","Africa","AGO",24,"#C96C0C","#313695","AO","health",-1.47131547494845
+"4520","Antigua and Barbuda","Americas",NA,NA,NA,NA,"AG","health",0.573015393433771
+"4521","Argentina","Americas","ARG",32,"#C62026","#A50026","AR","health",0.595693432076091
+"4522","Armenia","Asia",NA,NA,NA,NA,"AM","health",0.626905192129883
+"4523","Australia","Oceania","AUS",36,"#313695","#7F3B08","AU","health",1.15240631920088
+"4524","Austria","Europe","AUT",40,"#92C858","#40004B","AT","health",1.0674700991686
+"4525","Azerbaijan","Asia",NA,NA,NA,NA,"AZ","health",0.317879182153347
+"4526","Bahamas","Americas",NA,NA,NA,NA,"BS","health",0.247956218214245
+"4527","Bahrain","Asia","BHR",48,"#E7D4E8","#313695","BH","health",0.793936246659963
+"4528","Bangladesh","Asia","BGD",50,"#5B1567","#A50026","BD","health",-0.110804934674937
+"4529","Barbados","Americas",NA,NA,NA,NA,"BB","health",0.50855957237182
+"4530","Belarus","Europe",NA,NA,NA,NA,"BY","health",0.615304154420497
+"4531","Belgium","Europe","BEL",56,"#6DAD35","#40004B","BE","health",1.00032359976371
+"4532","Belize","Americas",NA,NA,NA,NA,"BZ","health",0.201286877505615
+"4533","Benin","Africa","BEN",204,"#EA952F","#7F3B08","BJ","health",-1.39645976966247
+"4534","Bhutan","Asia",NA,NA,NA,NA,"BT","health",-0.598912700816349
+"4535","Bolivia","Americas","BOL",68,"#F57748","#7F3B08","BO","health",-0.321158316080256
+"4536","Bosnia and Herzegovina","Europe","BIH",70,"#BFE492","#276419","BA","health",0.78376999226915
+"4537","Botswana","Africa","BWA",72,"#FDC37B","#40004B","BW","health",-0.465553907924379
+"4538","Brazil","Americas","BRA",76,"#AD0826","#276419","BR","health",0.413168047098386
+"4539","Brunei Darussalam","Asia",NA,NA,NA,NA,"BN","health",0.396961955930965
+"4540","Bulgaria","Europe","BGR",100,"#8AC34F","#A50026","BG","health",0.535538662210834
+"4541","Burkina Faso","Africa","BFA",854,"#BE6209","#A50026","BF","health",-1.4981275665712
+"4542","Burundi","Africa","BDI",108,"#E79029","#313695","BI","health",-1.53387196291702
+"4543","Cabo Verde","Africa",NA,NA,NA,NA,"CV","health",0.355841535215724
+"4544","Cambodia","Asia","KHM",116,"#B797C6","#313695","KH","health",-0.295572356042665
+"4545","Cameroon","Africa","CMR",120,"#BA5F08","#7F3B08","CM","health",-1.86297080192304
+"4546","Canada","Americas","CAN",124,"#CE2726","#40004B","CA","health",1.05221607375765
+"4547","Central African Republic","Africa","CAF",140,"#F5AA4E","#7F3B08","CF","health",-2.75632353891453
+"4548","Chad","Africa","TCD",148,"#DE8013","#7F3B08","TD","health",-2.43734471157391
+"4549","Chile","Americas","CHL",152,"#E04430","#7F3B08","CL","health",0.865628845146628
+"4550","China","Asia","CHN",156,"#40004B","#40004B","CN","health",0.723926052272477
+"4551","Colombia","Americas","COL",170,"#BE1826","#7F3B08","CO","health",0.563458937841634
+"4552","Comoros","Africa","COM",174,"#FDD6A2","#276419","KM","health",-1.04548409891317
+"4553","Congo, Dem. Rep.","Africa","COD",180,"#8B4107","#276419","CD","health",-1.62312481955427
+"4554","Congo, Rep.","Africa","COG",178,"#F7AE55","#A50026","CG","health",-1.21150630759429
+"4555","Costa Rica","Americas","CRI",188,"#FDB668","#A50026","CR","health",0.871495596821091
+"4556","Cote d'Ivoire","Africa","CIV",384,"#B75C07","#313695","CI","health",-2.19955544786976
+"4557","Croatia","Europe","HRV",191,"#C6E79C","#313695","HR","health",0.919846505519614
+"4558","Cuba","Americas","CUB",192,"#EF623E","#276419","CU","health",0.702032844646032
+"4559","Cyprus","Europe",NA,NA,NA,NA,"CY","health",1.11385025403674
+"4560","Czech Republic","Europe","CZE",203,"#7BB93E","#313695","CZ","health",0.932860934837299
+"4561","Denmark","Europe","DNK",208,"#A2D26B","#313695","DK","health",0.959236773738217
+"4562","Djibouti","Africa","DJI",262,"#FDDCAF","#7F3B08","DJ","health",-0.815532290286076
+"4563","Dominican Republic","Americas","DOM",214,"#F46D43","#313695","DO","health",0.117285670269945
+"4564","Ecuador","Americas","ECU",218,"#E54E35","#A50026","EC","health",0.491816419506797
+"4565","Egypt","Africa","EGY",818,"#833D07","#A50026","EG","health",0.117193491598823
+"4566","El Salvador","Americas","SLV",222,"#FA9856","#276419","SV","health",0.278452581143779
+"4567","Equatorial Guinea","Africa","GNQ",226,"#FDD9A8","#313695","GQ","health",-1.9889298342375
+"4568","Eritrea","Africa","ERI",232,"#F3A548","#313695","ER","health",-0.998329773423029
+"4569","Estonia","Europe",NA,NA,NA,NA,"EE","health",0.848738971687624
+"4570","Eswatini","Africa",NA,NA,NA,NA,"SZ","health",-1.6054531434313
+"4571","Ethiopia","Africa","ETH",231,"#873F07","#40004B","ET","health",-0.876921701629689
+"4572","Fiji","Oceania",NA,NA,NA,NA,"FJ","health",-0.523781397746637
+"4573","Finland","Europe","FIN",246,"#B2DD7E","#A50026","FI","health",1.08711724694753
+"4574","France","Europe","FRA",250,"#31701B","#40004B","FR","health",1.05201835707619
+"4575","Gabon","Africa","GAB",266,"#FDCA88","#313695","GA","health",-0.72953048401762
+"4576","Gambia","Africa","GMB",270,"#FDC074","#A50026","GM","health",-1.31341784986877
+"4577","Georgia","Asia",NA,NA,NA,NA,"GE","health",0.525349157579021
+"4578","Germany","Europe","DEU",276,"#276419","#7F3B08","DE","health",1.03295749839025
+"4579","Ghana","Africa","GHA",288,"#AB5406","#A50026","GH","health",-1.10504391425485
+"4580","Greece","Europe","GRC",300,"#599C28","#313695","GR","health",1.10400362147536
+"4581","Grenada","Americas",NA,NA,NA,NA,"GD","health",0.15706312049769
+"4582","Guatemala","Americas","GTM",320,"#EA5839","#40004B","GT","health",0.127461798765501
+"4583","Guinea","Africa","GIN",324,"#E18417","#A50026","GN","health",-1.55521097447021
+"4584","Guinea-Bissau","Africa","GNB",624,"#FDC681","#276419","GW","health",-2.03858021967036
+"4585","Guyana","Americas",NA,NA,NA,NA,"GY","health",-0.440019574754568
+"4586","Haiti","Americas","HTI",332,"#F7824D","#A50026","HT","health",-1.10048429915568
+"4587","Honduras","Americas","HND",340,"#F88D51","#40004B","HN","health",0.188122453385257
+"4588","Hong Kong, China","Asia","HKG",344,"#BC9ECA","#7F3B08",NA,"health",0.385650256412285
+"4589","Hungary","Europe","HUN",348,"#5FA12D","#7F3B08","HU","health",0.605312494106099
+"4590","Iceland","Europe","ISL",352,"#E6F5D0","#313695","IS","health",1.17553446035063
+"4591","India","Asia","IND",356,"#460552","#276419","IN","health",-0.466567527926161
+"4592","Indonesia","Asia","IDN",360,"#4D0A59","#313695","ID","health",-0.0297544458842153
+"4593","Iran","Asia","IRN",364,"#762A83","#7F3B08","IR","health",0.784660460115617
+"4594","Iraq","Asia","IRQ",368,"#9467A5","#40004B","IQ","health",-0.149076873395083
+"4595","Ireland","Europe","IRL",372,"#CCE9A7","#7F3B08","IE","health",1.06012250923842
+"4596","Israel","Asia","ISR",376,"#C2A5CF","#A50026","IL","health",1.15808457327785
+"4597","Italy","Europe","ITA",380,"#3B7D1D","#313695","IT","health",1.18690770141694
+"4598","Jamaica","Americas","JAM",388,"#FDD788","#7F3B08","JM","health",0.287358985195194
+"4599","Japan","Asia","JPN",392,"#611A6D","#40004B","JP","health",1.23037995306021
+"4600","Jordan","Asia","JOR",400,"#C6AAD2","#40004B","JO","health",0.42341633409051
+"4601","Kazakhstan","Asia",NA,NA,NA,NA,"KZ","health",0.388291237330264
+"4602","Kenya","Africa","KEN",404,"#9B4A06","#40004B","KE","health",-0.835840338366323
+"4603","Kiribati","Oceania",NA,NA,NA,NA,"KI","health",-0.490297032918794
+"4604","Korea, Rep.","Asia","KOR",410,"#7E3B8C","#40004B","KR","health",1.22886419876952
+"4605","Kuwait","Asia","KWT",414,"#E2CEE4","#276419","KW","health",0.861497396471302
+"4606","Latvia","Europe",NA,NA,NA,NA,"LV","health",0.504740987426934
+"4607","Lebanon","Asia","LBN",422,"#D4BCDB","#7F3B08","LB","health",0.863553606467051
+"4608","Lesotho","Africa","LSO",426,"#FDBD6E","#7F3B08","LS","health",-2.76834298231668
+"4609","Liberia","Africa","LBR",430,"#FCB661","#276419","LR","health",-1.25513644584299
+"4610","Libya","Africa","LBY",434,"#EE9D3C","#40004B","LY","health",0.337142622950548
+"4611","Lithuania","Europe",NA,NA,NA,NA,"LT","health",0.58532856850688
+"4612","Luxembourg","Europe",NA,NA,NA,NA,"LU","health",1.03496597666404
+"4613","Madagascar","Africa","MDG",450,"#B35806","#276419","MG","health",-0.798913354716805
+"4614","Malawi","Africa","MWI",454,"#C2650A","#40004B","MW","health",-1.13480040098764
+"4615","Malaysia","Asia","MYS",458,"#9970AB","#276419","MY","health",0.574305672587264
+"4616","Maldives","Asia",NA,NA,NA,NA,"MV","health",0.95133940819946
+"4617","Mali","Africa","MLI",466,"#D37610","#40004B","ML","health",-1.75077487280512
+"4618","Malta","Europe",NA,NA,NA,NA,"MT","health",1.08489116745652
+"4619","Mauritania","Africa","MRT",478,"#FAB25B","#40004B","MR","health",-0.920603767157274
+"4620","Mauritius","Africa","MUS",480,"#FDCD8E","#7F3B08","MU","health",0.38644805153412
+"4621","Mexico","Americas","MEX",484,"#B51026","#313695","MX","health",0.377930317956178
+"4622","Micronesia","Oceania",NA,NA,NA,NA,"FM","health",-0.366452069613991
+"4623","Moldova","Europe",NA,NA,NA,NA,"MD","health",0.220635637631462
+"4624","Mongolia","Asia","MNG",496,"#DDC8E1","#40004B","MN","health",-0.118033272330378
+"4625","Montenegro","Europe","MNE",499,"#DFF2C5","#276419","ME","health",0.739537874134487
+"4626","Morocco","Africa","MAR",504,"#9F4D06","#276419","MA","health",0.667786055672142
+"4627","Mozambique","Africa","MOZ",508,"#AF5606","#40004B","MZ","health",-1.73694803039952
+"4628","Myanmar","Asia","MMR",104,"#834492","#276419","MM","health",-0.549353621341368
+"4629","Namibia","Africa","NAM",516,"#FDBA67","#313695","NA","health",-1.2658361706487
+"4630","Nepal","Asia","NPL",524,"#8B559B","#7F3B08","NP","health",-0.228326081688583
+"4631","Netherlands","Europe","NLD",528,"#529624","#276419","NL","health",1.10187297672073
+"4632","New Zealand","Oceania","NZL",554,"#4575B4","#A50026","NZ","health",1.05017329578652
+"4633","Nicaragua","Americas","NIC",558,"#FDAE61","#7F3B08","NI","health",0.250391274426357
+"4634","Niger","Africa","NER",562,"#C5690B","#276419","NE","health",-1.33443892660359
+"4635","Nigeria","Africa","NGA",566,"#7F3B08","#7F3B08","NG","health",-2.46425936700956
+"4636","North Macedonia","Europe",NA,NA,NA,NA,"MK","health",0.648982920097136
+"4637","Norway","Europe","NOR",578,"#B9E188","#40004B","NO","health",1.10836686606175
+"4638","Oman","Asia","OMN",512,"#D9C2DE","#A50026","OM","health",0.702921996033708
+"4639","Pakistan","Asia","PAK",586,"#540F60","#7F3B08","PK","health",-0.661640201329929
+"4640","Panama","Americas","PAN",591,"#FDCF80","#313695","PA","health",0.609082505108805
+"4641","Papua New Guinea","Oceania",NA,NA,NA,NA,"PG","health",-0.906648107063237
+"4642","Paraguay","Americas","PRY",600,"#FBA35B","#313695","PY","health",0.125993590464278
+"4643","Peru","Americas","PER",604,"#D73027","#276419","PE","health",0.503061101410031
+"4644","Philippines","Asia","PHL",608,"#681F75","#276419","PH","health",-0.0665805560618178
+"4645","Poland","Europe","POL",616,"#468A1F","#A50026","PL","health",0.818117636111482
+"4646","Portugal","Europe","PRT",620,"#66A731","#A50026","PT","health",1.11644831790947
+"4647","Puerto Rico","Americas","PRI",630,"#FDBE70","#40004B","PR","health",0.817655734051532
+"4648","Qatar","Asia",NA,NA,NA,NA,"QA","health",1.00725403527681
+"4649","Romania","Europe","ROU",642,"#4B9020","#40004B","RO","health",0.604892591514502
+"4650","Russia","Europe",NA,NA,NA,NA,"RU","health",0.293402034962176
+"4651","Rwanda","Africa","RWA",646,"#E58C23","#276419","RW","health",-0.58561769451907
+"4652","Samoa","Oceania",NA,NA,NA,NA,"WS","health",0.397646946880064
+"4653","Sao Tome and Principe","Africa","STP",678,"#FEE0B6","#A50026","ST","health",-0.149720327757567
+"4654","Saudi Arabia","Asia","SAU",682,"#905EA1","#A50026","SA","health",0.494998494934483
+"4655","Senegal","Africa","SEN",686,"#D0730F","#A50026","SN","health",-0.444636396711404
+"4656","Serbia","Europe","SRB",688,"#74B33A","#276419","RS","health",0.633751704636019
+"4657","Seychelles","Africa",NA,NA,NA,NA,"SC","health",0.343880117706137
+"4658","Sierra Leone","Africa","SLE",694,"#EC9936","#A50026","SL","health",-2.63977967856453
+"4659","Singapore","Asia","SGP",702,"#CBB0D5","#276419","SG","health",1.19429245190984
+"4660","Slovak Republic","Europe","SVK",703,"#AAD875","#7F3B08","SK","health",0.792751407251923
+"4661","Slovenia","Europe","SVN",705,"#D9EFBB","#40004B","SI","health",1.05578762943144
+"4662","Solomon Islands","Oceania",NA,NA,NA,NA,"SB","health",0.0295598151422367
+"4663","Somalia","Africa","SOM",706,"#E3881D","#40004B","SO","health",-2.0359129693111
+"4664","South Africa","Africa","ZAF",710,"#8F4407","#313695","ZA","health",-1.17185386489527
+"4665","South Sudan","Africa",NA,NA,NA,NA,"SS","health",-1.9134193088849
+"4666","Spain","Europe","ESP",724,"#41831E","#7F3B08","ES","health",1.20397819009099
+"4667","Sri Lanka","Asia","LKA",144,"#AD8ABD","#40004B","LK","health",0.782855292412452
+"4668","St. Lucia","Americas",NA,NA,NA,NA,"LC","health",0.355601569666579
+"4669","St. Vincent and the Grenadines","Americas",NA,NA,NA,NA,"VC","health",0.089933450690048
+"4670","Sudan","Africa","SDN",736,"#934607","#7F3B08","SD","health",-0.914640144366663
+"4671","Suriname","Americas",NA,NA,NA,NA,"SR","health",0.0681960579921348
+"4672","Sweden","Europe","SWE",752,"#82BE45","#7F3B08","SE","health",1.14647475300536
+"4673","Switzerland","Europe","CHE",756,"#9ACD62","#276419","CH","health",1.19090195874885
+"4674","Syria","Asia","SYR",760,"#B291C1","#276419","SY","health",0.506365716629277
+"4675","Tajikistan","Asia",NA,NA,NA,NA,"TJ","health",0.0592259466827412
+"4676","Tanzania","Africa","TZA",834,"#974807","#A50026","TZ","health",-0.982777263749822
+"4677","Thailand","Asia","THA",764,"#7A3288","#A50026","TH","health",0.58070431248518
+"4678","Timor-Leste","Asia",NA,NA,NA,NA,"TL","health",-0.237076083447948
+"4679","Togo","Africa","TGO",768,"#F1A142","#276419","TG","health",-1.53391469274634
+"4680","Tonga","Oceania",NA,NA,NA,NA,"TO","health",0.0202601798318008
+"4681","Trinidad and Tobago","Americas","TTO",780,"#FEE090","#A50026","TT","health",0.173767521925814
+"4682","Tunisia","Africa","TUN",788,"#DA7D12","#313695","TN","health",0.661105905119111
+"4683","Turkey","Europe","TUR",792,"#2C6A1A","#A50026","TR","health",0.751033629600139
+"4684","Turkmenistan","Asia",NA,NA,NA,NA,"TM","health",-0.323702477380241
+"4685","Uganda","Africa","UGA",800,"#A75106","#7F3B08","UG","health",-1.28231714854011
+"4686","Ukraine","Europe",NA,NA,NA,NA,"UA","health",0.314983131863414
+"4687","United Arab Emirates","Asia",NA,NA,NA,NA,"AE","health",0.748358894557517
+"4688","United Kingdom","Europe","GBR",826,"#36771C","#276419","GB","health",0.982441892551369
+"4689","United States","Americas","USA",840,"#A50026","#40004B","US","health",0.680022051130006
+"4690","Uruguay","Americas","URY",858,"#FDC778","#276419","UY","health",0.659465302624098
+"4691","Uzbekistan","Asia",NA,NA,NA,NA,"UZ","health",0.123609894710853
+"4692","Vanuatu","Oceania",NA,NA,NA,NA,"VU","health",0.0478564883247192
+"4693","Venezuela","Americas","VEN",862,"#DB3A2B","#313695","VE","health",0.219013638861322
+"4694","Vietnam","Asia","VNM",704,"#6F247B","#313695","VN","health",0.503533152604417
+"4695","West Bank and Gaza","Asia","PSE",275,"#CFB6D8","#313695","PS","health",0.349388384746836
+"4696","Zambia","Africa","ZMB",894,"#D77911","#276419","ZM","health",-1.23815863762203
+"4697","Zimbabwe","Africa","ZWE",716,"#CC6F0D","#7F3B08","ZW","health",-1.94011783614774
 "4698","Afghanistan","Asia","AFG",4,"#874D96","#313695","AF","econ",-0.695433937070783
 "4699","Albania","Europe","ALB",8,"#D2ECB1","#A50026","AL","econ",-0.206581222276285
 "4700","Algeria","Africa","DZA",12,"#A34F06","#313695","DZ","econ",-0.228433923777085
