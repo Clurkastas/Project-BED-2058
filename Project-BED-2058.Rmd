@@ -77,12 +77,16 @@ What is the current state of the indicator (2019 or the last year)?
 How did it develop over the years?
 How is it distributed over the continents?
 
+# Data Acquisition
+
+As a source of data we considered different sources. These were gapminder, World Development Indicators (WDI), OECD, Quandl and eurostat. Because OECD had only information on OECD countries that source had to be left out from the beginning. Quandl and eurostat were excluded because they shared the most important data with WDI. Also overall, their data quality was worse. So in the end, the data was acquired from the gapminder dataset of the gapminder Rpackage and and API to WDI. WDI provides data from multiple original sources, e.g. UNESCO Institute for Statistics, LAC Equity Lab and data they gathered on their own. 
+Variables were searched for each of the selected topics and selected on the basis of their quality, e.g. amount of missings and great enough variance.
 
 # Data Analysis
 
 ## Factor Analysis
 
-To find out which variables we could use properly, we sorted chosen variables from the gapminder dataset and the World Development Indicators (WDI) into our five overarching topics. Variables were selected on the basis of their quality, e.g. amount of missings and great enough variance. After sorting, we conducted a confirmatory factor analysis for each topic. Unfit variables were sorted out and are depicted in red in the table below. Factor scores were used for further analysis.
+To find out which variables we could use properly, we sorted the chosen variables  into our five overarching topics. After sorting, we conducted a confirmatory factor analysis for each topic. Unfit variables were sorted out and are depicted in red color in the table below. Factor scores were used for further analysis.
 
 ```{r variables yeah}
 Health <- c("% Survival to age 65 (male)",
