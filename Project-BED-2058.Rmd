@@ -20,6 +20,7 @@ library(plotrix) #3D pie chart
 library(ggpubr) #chart mattia
 library(DescTools) # %like% function
 library(kableExtra)
+library(fmsb)
 
 #load data
 #data was gathered and cleand in "DataCollectionAndCleaning.R"
@@ -352,6 +353,10 @@ This graph shows us environmental situations in different countries. Almost all 
 This may be due to the fact that CO2 emissions in Europe are less toxic due to various technologies that reduce air pollution. There are no such technologies in Africa.
 
 # Conclussion
+```{r}
+
+
+```
 
 
 # Sources
