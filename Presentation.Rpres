@@ -1,0 +1,139 @@
+Which Country is the Best to Live in?
+========================================================
+author: Kirill Tumanov, Mattia Storero, Lucas Stark
+date: 14.11.2019
+autosize: true
+
+What is Life Quality about?
+========================================================
+```{r setup, include=FALSE}
+rm(list=ls()) #delete workspace
+knitr::opts_chunk$set(echo = F, include = T, warning=F, error=F)
+
+### Cleaning and Visualizing
+library(maps) #this way we can visualize data on maps (-> world map)
+library(tidyverse) #basic cleaning/ organising functions
+library(plotrix) #3D pie chart
+library(ggpubr) #chart mattia
+library(DescTools) # %like% function
+library(kableExtra)
+
+#load data
+#data was gathered and cleand in "DataCollectionAndCleaning.R"
+dat_raw  <- read.csv("dat_raw.csv")
+dat_wide <- read.csv("dat_wide.csv")
+dat_long <- read.csv("dat_long.csv")
+
+```
+
+```{r pie chart, include = T}
+# 3D Exploded Pie Chart
+slices <- c(20, 20, 20, 20, 20)
+lbls <- c("Health", "Economics", "Safety", "Education", "Environment")
+pie3D(slices,labels=lbls,explode=0.1,
+   main="Pie Chart of Variables ")
+```
+
+Variables (included and excluded)
+========================================================
+<font size = "5px">
+```{r variables yeah}
+Health <- c("% Survival to age 65 (male)",
+            "% Survival to age 65 (female)",
+            "Life Expectancy",
+            "% Access to clean cooking",
+            "Child mortality per 1,000 live births")
+Economy <- c("GDP per capita","Gini Coefficient","Unemployment","","")
+Safety <- c("Mortality due to bad hygiene and unclean water per 1,000",
+            "Mortality due to traffic accidents per 1,000",
+            "Mortality due to unintended poisoning per 1,000","",
+            "Mortality due to homicide per 1,000")
+Education <- c("% of children in primary education",
+               "% of children in secondary education",
+               "% of students receive monetary support from government in primary education",
+               "% of students receive monetary support from government in secondary education",
+               "Male to female ratio in secondary education") #this one didn't make it
+Environment <- c("Air pollution",
+                 "CO2 emmissions","",
+                 "Level of water stress",  #this is out
+                 "Renewable internal freshwater resources per capita") #this is out
+topictable <- cbind(Health,Economy,Safety,Education,Environment)
+rm(Health,Economy,Safety,Education,Environment)
+
+#make table
+topictable %>% 
+  knitr::kable(format = "html", caption = "Life Quality Factors") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  row_spec(5, color = "red") %>%
+  column_spec(1, color = "black") %>%
+  column_spec(5, color = "red") %>%
+  row_spec(1:2, color = "black")
+```
+</font>
+
+An overview of Life Quality
+========================================================
+```{r analysis beginning, include = T}
+temp <- dat_wide %>%
+  mutate(meta = (envir + health + econ + educ + secu)/5) %>%
+  arrange(-meta) %>%
+  mutate(worst10 = as.factor(ifelse(rank(meta)<=10,1,0)),
+         top10 = as.factor(ifelse(rank(meta)>=(length(meta)-10),1,0)))
+
+#world map
+thismap <- map_data("world")
+thismap$region[thismap$region=="Democratic Republic of the Congo"] <- "Congo, Dem. Rep."
+thismap$region[thismap$region=="Republic of Congo"] <- "Congo, Rep."
+temp2 <- temp[,c("country","meta")]
+temp2$country <- as.character(temp2$country)
+temp2$country[temp2$country=="United States"] <- "USA"
+temp2$country[temp2$country=="United Kingdom"] <- "UK"
+thismap2 <- full_join(thismap, temp2, 
+                     by = c("region" = "country")) 
+ggplot(thismap2, aes(long, lat, group=group, fill=meta), color = "white") +
+  scale_fill_gradient(limits=range(thismap2$meta), low="red", high="green", na.value = "white") + 
+  geom_polygon(show.legend = T) +
+  scale_y_continuous(limits = c(-60,max(thismap$lat))) + 
+  coord_fixed(1.3) + #this makes the right proportions for the image
+  theme(panel.background = element_rect(fill = 'lightblue', colour = 'black'))+
+  ggtitle("Life Quality across the World")
+```
+
+
+
+The Best and the Worst
+=========================================================
+```{r}
+ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(meta), y = meta,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = meta/2), size = 5, angle = 90) +
+labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
+
+```
+
+
+Example Category: Health
+========================================
+```{r health}
+health <- c("surv_65m","surv_65f","lifeExp","cook","child_mor")
+
+temp_h <- dat_long[str_detect(dat_long$variable,paste(health, collapse="|")),]
+temp_h <- left_join(temp_h,temp[,c("country","health","top10","worst10")],by="country") %>%
+  mutate(variable = as.factor(as.character(temp_h$variable)))
+levels(temp_h$variable) <- c("% of men surviving till age 65",
+                             "% of women surviving till age 65",
+                             "Life Expectancy",
+                             "% access for clean cooking",
+                             "Child mortality per 1,000 live births")
+levels(temp_h$variable) <- rev(levels(temp_h$variable))
+
+#graph
+temp_h %>%
+  ggplot(aes(x=health, y= measurement, label=country)) +
+  geom_point(col="grey") +
+  geom_point(dat=temp_h[temp_h$top10==1,], color="green") +
+  geom_point(dat=temp_h[temp_h$worst10==1,], color="darkred") +
+  geom_text(dat=temp_h[temp_h$worst10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
+  facet_wrap(~variable, scales = "free_y")
+
+```
