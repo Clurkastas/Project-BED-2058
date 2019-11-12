@@ -19,6 +19,9 @@ library(tidyverse) #basic cleaning/ organising functions
 WDI_datasets <- as_tibble(WDIcache()$series)
 temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
 temp2 <- WDI_datasets[temp,]
+temp3 <- WDI_datasets$sourceOrganization %>% table()
+temp3 <- cbind(temp3,temp3)
+
 #temp2[["description"]]
 #load datasets:
 # HEALTH #######################

@@ -1,5 +1,5 @@
 ---
-title: "Which is the best country to live in?"
+title: "Which is the Best Country to Live in?"
 author: "Kirill Tumanov, Mattia Storero, Lucas Stark"
 date: "14 12 2019"
 output: 
@@ -74,15 +74,18 @@ Air pollution (The world bank data)
 # Research Question
 To create a well-developed project, we asked the following questions:
 What is the current state of the indicator (2019 or the last year)?
-How did it develop over the years?
 How is it distributed over the continents?
 
+# Data Acquisition
+
+As a source of data we considered different sources. These were gapminder, World Development Indicators (WDI), OECD, Quandl and eurostat. Because OECD had only information on OECD countries that source had to be left out from the beginning. Quandl and eurostat were excluded because they shared the most important data with WDI. Also overall, their data quality was worse. So in the end, the data was acquired from the gapminder dataset of the gapminder Rpackage and and API to WDI. WDI provides data from multiple original sources, e.g. UNESCO Institute for Statistics, LAC Equity Lab and data they gathered on their own. 
+Variables were searched for each of the selected topics and selected on the basis of their quality, e.g. amount of missings and great enough variance.
 
 # Data Analysis
 
 ## Factor Analysis
 
-To find out which variables we could use properly, we sorted chosen variables from the gapminder dataset and the World Development Indicators (WDI) into our five overarching topics. Variables were selected on the basis of their quality, e.g. amount of missings and great enough variance. After sorting, we conducted a confirmatory factor analysis for each topic. Unfit variables were sorted out and are depicted in red in the table below. Factor scores were used for further analysis.
+To find out which variables we could use properly, we sorted the chosen variables  into our five overarching topics. After sorting, we conducted a confirmatory factor analysis for each topic. Unfit variables were sorted out and are depicted in red color in the table below. Factor scores were used for further analysis.
 
 ```{r variables yeah}
 Health <- c("% Survival to age 65 (male)",
@@ -269,6 +272,7 @@ temp %>%
 ```
 
 This graph shows us the rate of mortality due to 2 reasons: mortality due to lack of hygiene and mortality due to unintentional poisoning. It is clearly seen, that African countries are leaders in mortality in both categories.
+On the contrary, such occasions are very rare in Europe, America, Asia and Oceania. In these countries, more people have access to clean water and hygiene products. Poisoning are also rare, as there are certain safety measures.
 
 ```{r}
 temp2 <- temp[c(1:10,(length(temp$country)-10):length(temp$country)),] %>%
@@ -351,3 +355,5 @@ This may be due to the fact that CO2 emissions in Europe are less toxic due to v
 
 
 # Sources
+
+[Thank you for your attention!](https://vivescoal.com.au/wp-content/uploads/2016/12/thank-you-for-your-thank-you-word-cloud-1024x791.jpg)
