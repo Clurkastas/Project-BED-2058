@@ -1,3 +1,4 @@
+
 Which Country is the Best to Live in?
 ========================================================
 author: Kirill Tumanov, Mattia Storero, Lucas Stark
@@ -12,7 +13,7 @@ What is Life Quality about?
 
 Variables (included and excluded)
 ========================================================
-<font size = "5px">
+<font size = "4px">
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>Life Quality Factors</caption>
  <thead>
@@ -66,36 +67,38 @@ Variables (included and excluded)
 
 An overview of Life Quality
 ========================================================
-![plot of chunk analysis beginning](Presentation-figure/analysis beginning-1.png)
-
+![plot of chunk analysis beginning](WorldPlot.png)
 
 
 The Best and the Worst
 =========================================================
-![plot of chunk unnamed-chunk-1](Presentation-figure/unnamed-chunk-1-1.png)
+![plot of chunk unnamed-chunk-1](TopBottom10.png)
 
-
-Example Category: Health
+Health
 ========================================
-![plot of chunk health](Presentation-figure/health-1.png)
+![plot of chunk health](Health.png)
 
-Example Category: Economy
+Economy
+=======================================
+![plot of chunk unnamed-chunk-2](economy.png)
+
+Economy
+=======================================
+![plot of chunk unnamed-chunk-3](economy2.png)
+
+
+Safety
 ========================================
+![plot of chunk unnamed-chunk-4](safety2.png)
 
-Example Category: Safety
+Safety
 ========================================
-![plot of chunk unnamed-chunk-2](Presentation-figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-5](safety3.png)
 
-![plot of chunk unnamed-chunk-3](Presentation-figure/unnamed-chunk-3-1.png)
-
-![plot of chunk unnamed-chunk-4](Presentation-figure/unnamed-chunk-4-1.png)
-
-
-Example Category: Education
+Environment
 ========================================
+![plot of chunk unnamed-chunk-6](environment.png)
 
-Example Category: Environment
+Thank you for your attention!
 ========================================
-![plot of chunk unnamed-chunk-5](Presentation-figure/unnamed-chunk-5-1.png)
-
-![Thank you for your attention!](https://vivescoal.com.au/wp-content/uploads/2016/12/thank-you-for-your-thank-you-word-cloud-1024x791.jpg)
+![Thank you for your attention!](http://poster.keepcalmandposters.com/default/5555035_thank_you_for_your_attention.png)
