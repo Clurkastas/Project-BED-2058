@@ -202,16 +202,23 @@ temp_h %>%
 
 ```
 
-In order to analyse the sphere of economics, 3 variables have been considered. To make it possible, we have decided to include two of the three fundamental economic variables: GDP per capita and the unemployment rate. The GDP PER CAPITA is a measure of a country's economic output that accounts for its number of people. The unemployment rate was selected because is the most important variable to determine the health of the economy in the country. The inflation rate (the third fundamental variable) has not been considered because it is not directly connected to the satisfaction rate of living. Instead of it, we have thought that it would have been more interesting to consider the GINI COEFFICIENT, which measures the equality in income distribution. Putting together this three values, these graphs were created.
 
 
 ## Economy - Mattia
+In order to analyse the sphere of economics, 3 variables have been considered. To make it possible, we have decided to include two of the three fundamental economic variables: GDP per capita and the unemployment rate. The GDP PER CAPITA is a measure of a country's economic output that accounts for its number of people. The unemployment rate was selected because is the most important variable to determine the health of the economy in the country. The inflation rate (the third fundamental variable) has not been considered because it is not directly connected to the satisfaction rate of living. Instead of it, we have thought that it would have been more interesting to consider the GINI COEFFICIENT, which measures the equality in income distribution. Putting together this three values, these graphs were created.
+
+
 ```{r}
 ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
+```
 
-ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
+This graph show the result that comes out putting the three variables together in one called "ECON". Doing this union, we found a result that is very similar to the ones obtained with the other variables. In the top ten, there are 5 countries from Europe, 3 from Asia and 2 from Oceania. In this case, Norway is considered the best one. On the contrary, the outcome that comes out from the worst 10 graph is emblematic. In fact, in this special classification we can find only African countries. 
+
+
+```{r}
+#ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
   geom_bar(stat = "identity",position = "dodge") #+
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
   
@@ -220,21 +227,25 @@ ep1 <- temp %>%
   ggplot(aes(x = gdpPercap, y = gini,
              col = continent)) +
   geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
-  geom_point()
-  
+  geom_point() + labs(x = "GDP per capita", y = "Gini coefficient", title = "Relationship between GDP per capita and GINI index")
+ep1
+
 ep2 <- temp %>% 
   ggplot(aes(x = gdpPercap, y = unemp, 
              col = continent)) +
   geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
-  geom_point()  
-  
+  geom_point()+ labs(x = "GDP per capita", y = "unemployment rate", title = "Relationship between GDP per capita and unemployment rate")  
+ 
+ep2 
   
 ep3 <-  temp %>% 
   ggplot(aes(x = gini, y = unemp, 
              col = continent)) +
   geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
-  geom_point()
+  geom_point()+ labs(x = "GINI coefficient", y = "unemployment rate", title = "Relationship between GINI index per capita and unemployment rate")
+ep3
 ```
+The graphs show the relationship between the three economic variables taken two at a time (in this order: GDP/GINI, GDP/UNEMPLOYMENT, GINI/UNEMPLOYMENT). The three parallelisms confirm the classification previously obtained. In general, it is possible to see that almost the 10 best and worst countries confirm their position in all the three graphs.
 
 ## Safety - Kirill
 ```{r}
