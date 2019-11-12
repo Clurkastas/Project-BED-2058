@@ -78,3 +78,24 @@ The Best and the Worst
 Example Category: Health
 ========================================
 ![plot of chunk health](Presentation-figure/health-1.png)
+
+Example Category: Economy
+========================================
+
+Example Category: Safety
+========================================
+![plot of chunk unnamed-chunk-2](Presentation-figure/unnamed-chunk-2-1.png)
+
+![plot of chunk unnamed-chunk-3](Presentation-figure/unnamed-chunk-3-1.png)
+
+![plot of chunk unnamed-chunk-4](Presentation-figure/unnamed-chunk-4-1.png)
+
+
+Example Category: Education
+========================================
+
+Example Category: Environment
+========================================
+![plot of chunk unnamed-chunk-5](Presentation-figure/unnamed-chunk-5-1.png)
+
+![Thank you for your attention!](https://vivescoal.com.au/wp-content/uploads/2016/12/thank-you-for-your-thank-you-word-cloud-1024x791.jpg)
