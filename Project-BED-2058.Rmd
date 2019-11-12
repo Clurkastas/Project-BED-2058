@@ -202,7 +202,7 @@ temp_h %>%
 
 ```
 
-
+In order to analyse the sphere of economics, 3 variables have been considered. To make it possible, we have decided to include two of the three fundamental economic variables: GDP per capita and the unemployment rate. The GDP PER CAPITA is a measure of a country's economic output that accounts for its number of people. The unemployment rate was selected because is the most important variable to determine the health of the economy in the country. The inflation rate (the third fundamental variable) has not been considered because it is not directly connected to the satisfaction rate of living. Instead of it, we have thought that it would have been more interesting to consider the GINI COEFFICIENT, which measures the equality in income distribution. Putting together this three values, these graphs were created.
 
 
 ## Economy - Mattia
