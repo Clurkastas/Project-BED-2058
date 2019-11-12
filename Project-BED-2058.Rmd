@@ -1,5 +1,5 @@
 ---
-title: "Which is the best country to live in?"
+title: "Which is the Best Country to Live in?"
 author: "Kirill Tumanov, Mattia Storero, Lucas Stark"
 date: "14 12 2019"
 output: 
