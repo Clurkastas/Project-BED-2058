@@ -12,7 +12,7 @@ What is Life Quality about?
 
 Variables (included and excluded)
 ========================================================
-<font size = "5px">
+<font size = "4px">
 <table class="table table-striped table-hover" style="margin-left: auto; margin-right: auto;">
 <caption>Life Quality Factors</caption>
  <thead>
@@ -66,15 +66,14 @@ Variables (included and excluded)
 
 An overview of Life Quality
 ========================================================
-![plot of chunk analysis beginning](Presentation-figure/analysis beginning-1.png)
-
+![plot of chunk analysis beginning](WorldPlot.png)
 
 
 The Best and the Worst
 =========================================================
-![plot of chunk unnamed-chunk-1](Presentation-figure/unnamed-chunk-1-1.png)
+![plot of chunk unnamed-chunk-1](TopBottom10.png)
 
 
 Example Category: Health
 ========================================
-![plot of chunk health](Presentation-figure/health-1.png)
+![plot of chunk health](Health.png)

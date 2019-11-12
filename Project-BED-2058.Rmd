@@ -46,6 +46,7 @@ slices <- c(20, 20, 20, 20, 20)
 lbls <- c("Health", "Economics", "Safety", "Education", "Environment")
 pie3D(slices,labels=lbls,explode=0.1,
    main="Pie Chart of Variables ")
+
 ```
 
 The first significant indicator for us was health, which included: 
@@ -119,6 +120,8 @@ topictable %>%
   column_spec(1, color = "black") %>%
   column_spec(5, color = "red") %>%
   row_spec(1:2, color = "black")
+
+
 ```
 
 
@@ -174,6 +177,7 @@ ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], map
   geom_text(aes(label=country, y = meta/2), size = 5, angle = 90) +
 labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
 
+
 ```
 
 This graph shows us top 10 best countries for living and top 10 worst countries. We ranked them by continents.
@@ -203,6 +207,8 @@ temp_h %>%
   geom_point(dat=temp_h[temp_h$worst10==1,], color="darkred") +
   geom_text(dat=temp_h[temp_h$worst10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
   facet_wrap(~variable, scales = "free_y")
+
+# ggsave("Health.png", height = 7 , width = 12) #for you, Kirill
 
 ```
 
