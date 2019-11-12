@@ -74,7 +74,6 @@ Air pollution (The world bank data)
 # Research Question
 To create a well-developed project, we asked the following questions:
 What is the current state of the indicator (2019 or the last year)?
-How did it develop over the years?
 How is it distributed over the continents?
 
 # Data Acquisition
@@ -262,6 +261,7 @@ temp %>%
 ```
 
 This graph shows us the rate of mortality due to 2 reasons: mortality due to lack of hygiene and mortality due to unintentional poisoning. It is clearly seen, that African countries are leaders in mortality in both categories.
+On the contrary, such occasions are very rare in Europe, America, Asia and Oceania. In these countries, more people have access to clean water and hygiene products. Poisoning are also rare, as there are certain safety measures.
 
 ```{r}
 temp2 <- temp[c(1:10,(length(temp$country)-10):length(temp$country)),] %>%
@@ -344,3 +344,5 @@ This may be due to the fact that CO2 emissions in Europe are less toxic due to v
 
 
 # Sources
+
+[Thank you for your attention!](https://vivescoal.com.au/wp-content/uploads/2016/12/thank-you-for-your-thank-you-word-cloud-1024x791.jpg)
