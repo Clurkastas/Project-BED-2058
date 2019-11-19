@@ -65,14 +65,15 @@ Variables (included and excluded)
 </table>
 </font>
 
+The Best and the Worst
+=========================================================
+![plot of chunk unnamed-chunk-1](TopBottom10.png)
+
 An overview of Life Quality
 ========================================================
 ![plot of chunk analysis beginning](WorldPlot.png)
 
 
-The Best and the Worst
-=========================================================
-![plot of chunk unnamed-chunk-1](TopBottom10.png)
 
 Health
 ========================================
@@ -98,6 +99,13 @@ Safety
 Environment
 ========================================
 ![plot of chunk unnamed-chunk-6](environment.png)
+
+Conclusion
+========================================
+- Norway is the best country to live in according to our analysis
+- Corresponds OECD "Better Life Index"
+- 5/10 matches in Top 10: Norway, Australia, Denmark, the Netherlands, and Finland. 
+
 
 Thank you for your attention!
 ========================================

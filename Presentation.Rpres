@@ -73,6 +73,13 @@ topictable %>%
 ```
 </font>
 
+The Best and the Worst
+=========================================================
+```{r}
+knitr::include_graphics('TopBottom10.png')
+
+```
+
 An overview of Life Quality
 ========================================================
 ```{r analysis beginning, include = T}
@@ -80,12 +87,6 @@ knitr::include_graphics('WorldPlot.png')
 ```
 
 
-The Best and the Worst
-=========================================================
-```{r}
-knitr::include_graphics('TopBottom10.png')
-
-```
 
 Health
 ========================================
@@ -124,6 +125,13 @@ Environment
 ```{r}
 knitr::include_graphics('environment.png')
 ```
+
+Conclusion
+========================================
+- Norway is the best country to live in according to our analysis
+- Corresponds OECD "Better Life Index"
+- 5/10 matches in Top 10: Norway, Australia, Denmark, the Netherlands, and Finland. 
+
 
 Thank you for your attention!
 ========================================
