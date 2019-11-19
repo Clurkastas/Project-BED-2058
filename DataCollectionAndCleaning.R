@@ -17,10 +17,11 @@ library(tidyverse) #basic cleaning/ organising functions
 ### WORLD BANK ###
 #- load table with all available variables
 WDI_datasets <- as_tibble(WDIcache()$series)
-temp <- stringr::str_detect(WDI_datasets[["name"]], "income")
+temp <- stringr::str_detect(WDI_datasets[["name"]], "population dynamic")
 temp2 <- WDI_datasets[temp,]
 temp3 <- WDI_datasets$sourceOrganization %>% table()
 temp3 <- cbind(temp3,temp3)
+
 
 #temp2[["description"]]
 #load datasets:
@@ -265,7 +266,7 @@ topics <- list(envir,health,econ,educ,secu)
 #run final cfa's
 fa <- topics %>%
   map(~psych::fa(dat_wide[,.x],rotate = "varimax",fm="ml"))
-fa[[3]]
+fa[[1]]
 
 
 #get factor scores
