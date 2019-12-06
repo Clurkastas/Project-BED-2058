@@ -122,7 +122,7 @@ temp$topbot10[1:10] <- "Top 10"
 temp$topbot10[(length(temp$topbot10)-9):length(temp$topbot10)] <- "Bottom 10"
 
 populationdata <- read.csv2("populationWDI.csv", header = T)
-populationdata <- populationdata[,c("ï..Country.Name","X2018")] 
+populationdata <- populationdata[,c(1,63)] 
 names(populationdata) <- c("country","population")
 temp$country <- as.character(temp$country)
 populationdata$country <- as.character(populationdata$country)
@@ -421,6 +421,7 @@ temp %>%
 
 This graph shows us environmental situations in different countries. Almost all African countries have a high degree of air pollution, but low CO2 emissions. The situation with european countries is completely different. They have a high level of CO2 emissions and not as much air pollution as African countries.
 This may be due to the fact that European countries use technologies to reduce air pollution and heighten ecological standards.
+
 # Conclussion
 
 As shown in the chapter above, Norway seems to be the best country to live in based on how we gathered and analyzed the data. OECD cam to the same conclussion within their [Better Life Index Project](http://www.oecdbetterlifeindex.org/). They did use more categories and different variables, but answered the question in the same way, which is a nice validation of the result. Interestingly, five of our top ten countries are also in their top ten. These are Norway, Australia, Denmark, the Netherlands, and Finland. 
