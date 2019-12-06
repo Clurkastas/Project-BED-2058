@@ -20,7 +20,9 @@ library(plotrix) #3D pie chart
 library(ggpubr) #chart mattia
 library(DescTools) # %like% function
 library(kableExtra)
-library(fmsb)
+library(GGally)
+library(hrbrthemes)
+library(data.table)
 
 #load data
 #data was gathered and cleand in "DataCollectionAndCleaning.R"
@@ -33,12 +35,11 @@ dat_long <- read.csv("dat_long.csv")
 
 # Background
 The idea of this project was created in middle of September 2019.
-Three guys, from different lands had some discussions about their countries.
-Then, we started to think about particular question:
+We, three guys from different countries, had some discussions about our countries and how it was to live there.
+Then, we started to think about one particular question:
 "Which is the world's best country to live in?"
 
-To receive an answer for this attractive question we decided to select some 
-variables, which were considerable for us.
+To get an answer for this question of life quality, we decided to select some topics, which were considerable for us.
 
 
 ```{r pie chart, include = T}
@@ -50,38 +51,20 @@ pie3D(slices,labels=lbls,explode=0.1,
 
 ```
 
-The first significant indicator for us was health, which included: 
-Life expectancy (gapminder)
-Child mortality (The world bank data)
-Survival to age 65 by both genders (The world bank data)
-Water Supply (The world bank data)
-
-The second essential variable for us was Economics (Jobs/ Income), which included:
-Inequality, gini coefficient (The world bank data)
-Income, GDP (gapminder)
-Unemployment rate at the age of 25 - 54 (The world bank data)
-
-The third vital marker for us was Safety, which included:
-Traffic deaths (gapminder)
-Murders/100k (The world bank data)
-
-The fourth considerable indicator for us was Education, which included:
-Gender ratio of mean age in education (The world bank data)
-Mean years in school (age group 25-54) (The world bank data)
-
-The fifth substantial marker for us was Environment, we used:
-CO2 emissions, tonnes per person (The world bank data)
-Air pollution (The world bank data)
+The first significant topic for us was health as it is an obvious indicator of life quality and we knew that data like life expectancy was well accessible.
+The second essential variable for us was economics as the economic situatio of a country is crucial for one's own situation. How much income one gets and whether employment is secured does inflict life quality.
+The third vital marker for us was safety. Everyone wants to feel secure. 
+The fourth considerable indicator for us was education. Good education helps to get ready for the job market and is important for personal development.
+The fifth substantial marker for us was environment. Factors like CO2 emissions may not affect just the one country, but air pollution can inflict health and well-being.
 
 # Research Question
-To create a well-developed project, we asked the following questions:
-What is the current state of the indicator (2019 or the last year)?
-How is it distributed over the continents?
+To create a well-developed project, we asked the following research questions:
+What is the best country to live in based on health, education, economy, safety and environment? How is it distributed over the continents? What additional information can we draw from the top and bottom ten countries looking at each indivual topic?
 
 # Data Acquisition
 
 As a source of data we considered different sources. These were gapminder, World Development Indicators (WDI), OECD, Quandl and eurostat. Because OECD had only information on OECD countries that source had to be left out from the beginning. Quandl and eurostat were excluded because they shared the most important data with WDI. Also overall, their data quality was worse. So in the end, the data was acquired from the gapminder dataset of the gapminder Rpackage and and API to WDI. WDI provides data from multiple original sources, e.g. UNESCO Institute for Statistics, LAC Equity Lab and data they gathered on their own. 
-Variables were searched for each of the selected topics and selected on the basis of their quality, e.g. amount of missings and great enough variance.
+Variables were searched for each of the selected topics and selected on the basis of their quality, e.g. amount of missings and great enough variance. Because not all data was available for this or last year, we decided to take the most current data point from between the years 2000 and 2019 for each country.
 
 # Data Analysis
 
@@ -128,13 +111,72 @@ topictable %>%
 
 ## General Life Quality
 
-```{r analysis beginning, include = T}
+All five variables for the individual topics were weighted equally to create the meta variable of life quality. The top and bottom ten countries are depicted in the following chart.
+
+```{r, echo = F, include = T}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
-  arrange(-meta) %>%
-  mutate(worst10 = as.factor(ifelse(rank(meta)<=10,1,0)),
-         top10 = as.factor(ifelse(rank(meta)>=(length(meta)-10),1,0)))
+  arrange(-meta)
+temp$topbot10 <- "neither"
+temp$topbot10[1:10] <- "Top 10"
+temp$topbot10[(length(temp$topbot10)-9):length(temp$topbot10)] <- "Bottom 10"
 
+populationdata <- read.csv2("populationWDI.csv", header = T)
+populationdata <- populationdata[,c("ï..Country.Name","X2018")] 
+names(populationdata) <- c("country","population")
+temp$country <- as.character(temp$country)
+populationdata$country <- as.character(populationdata$country)
+populationdata$population <- as.numeric(populationdata$population)
+populationdata$country[populationdata$country=="Bahamas, The"] <- "Bahamas"
+populationdata$country[populationdata$country=="Russian Federation"] <- "Russia"
+populationdata$country[populationdata$country=="Iran, Islamic Rep."] <- "Iran"
+populationdata$country[populationdata$country=="Egypt, Arab Rep."]   <- "Egypt"
+populationdata$country[populationdata$country=="Syrian Arab Republic"]   <- "Syria"
+populationdata$country[populationdata$country=="Venezuela, RB"]   <- "Venezuela"
+populationdata$country[populationdata$country=="Gambia, The"]   <- "Gambia"
+populationdata$country[populationdata$country=="Micronesia, Fed. Sts."]   <- "Micronesia"
+populationdata$country[populationdata$country=="Yemen, Rep."] <- "Yemen"
+
+temp <- full_join(temp, populationdata, by = "country")
+temp <- temp[!is.na(temp$continent),]
+temp <- temp[!is.na(temp$population),]
+temp <- temp[str_detect(temp$country,"Hong", negate = T),]
+
+# add weighted data for continent means
+contitemp <- temp%>%
+  group_by(continent) %>%
+  summarise(contPop = sum(population))
+temp <- temp %>% full_join(contitemp, by = "continent") %>%
+  mutate(contweight = population/contPop)
+
+
+topbottom10 <- temp[temp$topbot10!="neither",] %>%
+  rename(`life quality` = meta,
+         economy = econ,
+         education = educ,
+         safety = secu,
+         environment = envir)
+
+```
+
+
+```{r, include = T}
+ggplot(data = topbottom10, mapping = aes(x = -rank(`life quality`), y = `life quality`,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = `life quality`/2), 
+            size = 5, angle = 90) +
+labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
+
+```
+
+As you can see `r topbottom10$country[max(topbottom10[,"life quality"])]` is the top country and therefore has the highest life quality according to our analysis. Also, other countries from Europe, Oceania and Asia are in the top ten. In the bottom ten only African countries are represented.
+
+The next graphic shows the world map with colors for each country. These colors represent the state of life quality of the country from low (red) to high (green). Countries in white color indicate missing values. 
+
+
+
+
+```{r analysis beginning, include = T}
 #world map
 thismap <- map_data("world")
 thismap$region[thismap$region=="Democratic Republic of the Congo"] <- "Congo, Dem. Rep."
@@ -152,35 +194,53 @@ ggplot(thismap2, aes(long, lat, group=group, fill=meta), color = "white") +
   coord_fixed(1.3) + #this makes the right proportions for the image
   theme(panel.background = element_rect(fill = 'lightblue', colour = 'black'))+
   ggtitle("Life Quality across the World")
+```
 
+As you can see on the world map, each of the continents has different qualitative and quantitative features. In general, Europe is a rather green country, therefore offers high life quality. In contrast, Africa is a generally more red continent, therefore offers low life quality. The other three continents (Americas, Asia and Oceania) are more diverse and rather in the middle field. Oceania seems to offer rather high life quality, but the smaller countries of it are not that visible. To get a better look at the overall life quality per continent, the means are depicted in the following graph. They are weighted by population size, so that every country contributes only their percentage of the total population in each continent.
+
+
+```{r analysis next, include = T}
+continentdata <- temp %>%
+  group_by(continent) %>%
+  summarise(health = sum(health*contweight),
+            economy = sum(econ*contweight),
+            education = sum(educ*contweight),
+            safety = sum(secu*contweight),
+            environment = sum(envir*contweight),
+            `life quality` = sum(meta*contweight))
+
+ggparcoord(continentdata,
+    columns = c("life quality", "health","economy",
+                "education","safety","environment"), 
+    groupColumn = "continent",
+    order = "allClass",
+    showPoints = TRUE, 
+    title = "Life Quality and Aspects by Continent",
+    alphaLines = 0.7) +
+  theme_ipsum()+
+  theme(
+    plot.title = element_text(size=10)
+  )
+```
+
+As you can see in this graph, the overall life quality per person is highest in Oceania. This is probably due to the high values for Australia and New Zealand. Both countries are in the top ten of life quality. Second place is Europe, third is the Americas. These three continents are all above average. Asia is half a standard deviation below average, and Africa even one and a half standard deviations below it. Qualitative differences due to life quality can be seen in the five subdimensions, e.g. Oceania having a really high score in education, and the top three continents being relatively equal in terms of security.
+
+In a next step, we will have a quick view on whether life quality correlates with the population size.
+
+```{r analysis pop, include = T}
 #meta and population
 temp %>%
-  ggplot(aes(x=log10(pop), y=meta, col=continent, label=country, size=pop)) +
+  ggplot(aes(x=log10(population), y=meta, col=continent, label=country, size=pop)) +
   geom_point() +
   geom_smooth(col="blue", method = 'lm') +
   ggtitle("Life Quality dependend on Population Size")
 
 ```
 
-What this method does?
-For this method, we created a new variable, which is called "meta". It includes sum of 5 variables 
-such as environment, health, economics, education and security. After we divided it for 5 (number of variables) and arranged it.
+In the plot you can see that there is a slight decrease of life quality with a higher population. However, this relationship is not significant. Therefore, data suggests that life quality is independent from country size. 
 
-What is the result of it?
-According for our data, the best country to live in is Norway with 1.81 points, the second place Ireland takes and the
-third is Singapore. On the bottom of our rating is located Chad.
+Now we will look at each subdimension of life quality to get a better understanding of how these add to life quality. 
 
-
-```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(meta), y = meta,  fill = continent)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = meta/2), size = 5, angle = 90) +
-labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
-
-
-```
-
-This graph shows us top 10 best countries for living and top 10 worst countries. We ranked them by continents.
 
 ## Health - Lucas
 
@@ -190,7 +250,7 @@ For measuring health we included five different variables: the percentage of peo
 health <- c("surv_65m","surv_65f","lifeExp","cook","child_mor")
 
 temp_h <- dat_long[str_detect(dat_long$variable,paste(health, collapse="|")),]
-temp_h <- left_join(temp_h,temp[,c("country","health","top10","worst10")],by="country") %>%
+temp_h <- left_join(temp_h,temp[,c("country","health","topbot10")],by="country") %>%
   mutate(variable = as.factor(as.character(temp_h$variable)))
 levels(temp_h$variable) <- c("% of men surviving till age 65",
                              "% of women surviving till age 65",
@@ -203,12 +263,11 @@ levels(temp_h$variable) <- rev(levels(temp_h$variable))
 temp_h %>%
   ggplot(aes(x=health, y= measurement, label=country)) +
   geom_point(col="grey") +
-  geom_point(dat=temp_h[temp_h$top10==1,], color="green") +
-  geom_point(dat=temp_h[temp_h$worst10==1,], color="darkred") +
-  geom_text(dat=temp_h[temp_h$worst10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
+  geom_point(dat=temp_h[temp_h$topbot10=="Top 10",], color="green") +
+  geom_point(dat=temp_h[temp_h$topbot10=="Bottom 10",], color="darkred") +
+  geom_text(dat=temp_h[temp_h$topbot10=="Bottom 10",], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
   facet_wrap(~variable, scales = "free_y")
 
-# ggsave("Health.png", height = 7 , width = 12) #for you, Kirill
 
 ```
 
@@ -219,15 +278,15 @@ In order to analyse the sphere of economics, 3 variables have been considered. T
 
 
 ```{r}
-ggplot2::ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(econ), y = econ,  fill = continent)) +
+ggplot2::ggplot(data = topbottom10, mapping = aes(x = -rank(economy), y = economy,  fill = continent)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
+  geom_text(aes(label=country, y = economy/2), size = 5, angle = 90)
 ```
 
 This graph show the result that comes out putting the three variables together in one called "ECON". Doing this union, we found a result that is very similar to the ones obtained with the other variables. In the top ten, there are 5 countries from Europe, 3 from Asia and 2 from Oceania. In this case, Norway is considered the best one. On the contrary, the outcome that comes out from the worst 10 graph is emblematic. In fact, in this special classification we can find only African countries. 
 
 
-```{r}
+```{r economy}
 #ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
   geom_bar(stat = "identity",position = "dodge") #+
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
@@ -236,34 +295,36 @@ This graph show the result that comes out putting the three variables together i
 ep1 <- temp %>% 
   ggplot(aes(x = gdpPercap, y = gini,
              col = continent)) +
-  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
   geom_point() + labs(x = "GDP per capita", y = "Gini coefficient", title = "Relationship between GDP per capita and GINI index")
 ep1
 
 ep2 <- temp %>% 
   ggplot(aes(x = gdpPercap, y = unemp, 
              col = continent)) +
-  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
   geom_point()+ labs(x = "GDP per capita", y = "unemployment rate", title = "Relationship between GDP per capita and unemployment rate")  
- 
+
 ep2 
   
 ep3 <-  temp %>% 
   ggplot(aes(x = gini, y = unemp, 
              col = continent)) +
-  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
   geom_point()+ labs(x = "GINI coefficient", y = "unemployment rate", title = "Relationship between GINI index per capita and unemployment rate")
 ep3
+#ggsave("economy2.png", height = 7 , width = 12)
 ```
 The graphs show the relationship between the three economic variables taken two at a time (in this order: GDP/GINI, GDP/UNEMPLOYMENT, GINI/UNEMPLOYMENT). The three parallelisms confirm the classification previously obtained. In general, it is possible to see that almost the 10 best and worst countries confirm their position in all the three graphs.
 
 ## Safety - Kirill
 ```{r}
-ggplot(data = temp[c(1:10,(length(temp$country)-10):length(temp$country)),], mapping = aes(x = -rank(secu), y = secu,  fill = continent)) +
+ggplot(data = topbottom10, mapping = aes(x = -rank(safety), y = safety,  fill = continent)) +
   geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = secu/2), size = 5, angle = 90) +
+  geom_text(aes(label=country, y = safety/2), size = 5, angle = 90) +
   labs(x = "Countries", y = "Points", title = "Top 10 best and top 10 worst countries for safety") +
   scale_y_continuous(limits =  c(-3.2,1))
+
 ```
 
 This graph shows us top 10 best countries, where people can feel them calm and top 10 worst countries for safety.
@@ -274,15 +335,16 @@ temp %>%
   ggplot(aes(x = mor_hyg, y = poison,
              col = continent)) +
   geom_point() +
-  geom_text(dat=temp[temp$worst10==1,], aes(label=country)) +
+  geom_text(dat=temp[temp$topbot10=="Bottom 10",], aes(label=country)) +
   labs(x = "Mortality due to lack of hygiene", y = "Mortality due to unintentional poisoning", title = "Mortality due to lack of hygiene and unintentional poisoning (per 100,000 population)")
+
 ```
 
 This graph shows us the rate of mortality due to 2 reasons: mortality due to lack of hygiene and mortality due to unintentional poisoning. It is clearly seen, that African countries are leaders in mortality in both categories.
 On the contrary, such occasions are very rare in Europe, America, Asia and Oceania. In these countries, more people have access to clean water and hygiene products. Poisoning are also rare, as there are certain safety measures.
 
 ```{r}
-temp2 <- temp[c(1:10,(length(temp$country)-10):length(temp$country)),] %>%
+temp2 <- topbottom10 %>%
   mutate(rank = rank(road))
 temp2$rank[temp2$country=="Japan"] <- 5
 temp2$rank[temp2$country=="Ireland"] <- 6
@@ -291,9 +353,10 @@ ggplot(data = temp2, mapping = aes(x = rank, y = road,  fill = continent)) +
   geom_bar(stat = "identity") +
   geom_text(aes(label=country, y = road/2), size = 5, angle = 90) +
    labs(x = "Countries", y = "Mortality on roads", title = "Top 10 best and top 10 worst countries for mortality caused by road traffic injury (per 100,000 people)")
+
 ```
 
-This graph shows us the rate of mortality caused by road traffic injury. We put on the graph top 10 best and top 10 worst countries according to this indicator. African countries have high level of road mortality. For example, in Burundi, Congo Dem. Rep., Central African Republic, Cameron and South Sudan >= 30 out of 100,000 people die on roads. As for top best 8 countries, less than 5 out of 100,000 people die on roads.
+This graph shows us the rate of mortality caused by road traffic injury. We put on the graph top 10 best and top 10 worst countries according to this indicator. African countries have high level of road mortality. For example, in Burundi, Congo Dem. Rep., Central African Republic, Cameron and South Sudan >= 30 out of 100,000 people died on roads. As for top best 10 countries, this number is approximately 6 times less.
 
 
 ## Education
@@ -303,7 +366,7 @@ For the topic of education, we looked at four variables. Specifically, two of th
 ```{r, include = T}
 educ <- c("pri_ed","sec_ed","pri_mon","sec_mon")
 temp_ed <- dat_long[str_detect(dat_long$variable,paste(educ, collapse="|")),]
-temp_ed <- left_join(temp_ed,temp[,c("country","educ","top10","worst10")],by="country") %>%
+temp_ed <- left_join(temp_ed,temp[,c("country","educ","topbot10")],by="country") %>%
   mutate(variable = as.factor(as.character(temp_ed$variable)))
 levels(temp_ed$variable) <- c("% of children in primary education",
                               "% of students receiving govern. payments in pri. ed.",
@@ -314,23 +377,23 @@ levels(temp_ed$variable) <- c("% of children in primary education",
 temp_ed %>%
   ggplot(aes(x=educ, y= measurement, label=country)) +
   geom_point(col="grey") +
-  geom_point(dat=temp_ed[temp_ed$top10==1,], color="green") +
-  geom_text(dat=temp_ed[temp_ed$top10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="darkgreen", size=3) +
-  geom_point(dat=temp_ed[temp_ed$worst10==1,], color="darkred")+
-  geom_text(dat=temp_ed[temp_ed$worst10==1,], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
+  geom_point(dat=temp_ed[temp_ed$topbot10=="Top 10",], color="green") +
+  geom_text(dat=temp_ed[temp_ed$topbot10=="Top 10",], aes(label=country), alpha=0.7, hjust = -0.1, color="darkgreen", size=3) +
+  geom_point(dat=temp_ed[temp_ed$topbot10=="Bottom 10",], color="darkred")+
+  geom_text(dat=temp_ed[temp_ed$topbot10=="Bottom 10",], aes(label=country), alpha=0.7, hjust = -0.1, color="red", size=3) +
   facet_wrap(~variable, scales = "free_y")
 
-pri_ed_btm_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in primary education"&temp_ed$worst10==1]) %>% round(digits=2)
-sec_ed_btm_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"&temp_ed$worst10==1]) %>% round(digits=2)
-sec_ed_top_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"&temp_ed$top10==1]) %>% round(digits=2)
+pri_ed_btm_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in primary education"&temp_ed$topbot10=="Bottom 10"]) %>% round(digits=2)
+sec_ed_btm_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"&temp_ed$topbot10=="Bottom 10"]) %>% round(digits=2)
+sec_ed_top_range <- range(temp_ed$measurement[temp_ed$variable=="% of children in secondary education"&temp_ed$topbot10=="Top 10"]) %>% round(digits=2)
 pay_btm <- temp_ed %>%
   filter(nchar(as.character(variable)) > 40) %>%
-  filter(worst10==1) %>% 
+  filter(topbot10=="Bottom 10") %>% 
   mutate(measurement = round(measurement, digits=2),
          country = as.character(country))
 pay_top <- temp_ed %>%
   filter(nchar(as.character(variable)) > 40) %>%
-  filter(top10==1) %>% 
+  filter(topbot10=="Top 10") %>% 
   mutate(measurement = round(measurement, digits=2),
          country = as.character(country))
 
@@ -350,21 +413,17 @@ So in an educational view on this topic, it is definitely better to live in the 
 temp %>% 
   ggplot(aes(x = CO2, y = air,
              col = continent)) +
-  geom_text(dat=temp[temp$top10==1|temp$worst10==1,], aes(label=country)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
   geom_point() +
   labs(x = "CO2 emissions", y = "Air pollution, micrograms/cubic meter", title = "Environment in different countries, ranked by continents and 2 variables")
+
 ```
 
 This graph shows us environmental situations in different countries. Almost all African countries have a high degree of air pollution, but low CO2 emissions. The situation with european countries is completely different. They have a high level of CO2 emissions and not as much air pollution as African countries.
-This may be due to the fact that CO2 emissions in Europe are less toxic due to various technologies that reduce air pollution. There are no such technologies in Africa.
-
+This may be due to the fact that European countries use technologies to reduce air pollution and heighten ecological standards.
 # Conclussion
-```{r}
+
+As shown in the chapter above, Norway seems to be the best country to live in based on how we gathered and analyzed the data. OECD cam to the same conclussion within their [Better Life Index Project](http://www.oecdbetterlifeindex.org/). They did use more categories and different variables, but answered the question in the same way, which is a nice validation of the result. Interestingly, five of our top ten countries are also in their top ten. These are Norway, Australia, Denmark, the Netherlands, and Finland. 
 
 
-```
-
-
-# Sources
-
-[Thank you for your attention!](https://vivescoal.com.au/wp-content/uploads/2016/12/thank-you-for-your-thank-you-word-cloud-1024x791.jpg)
+This shows more intersections, especially on the life quality of northern European countries, which seems to be really high. But in general, it is good to be born in either Oceania or Europe. In mean of life quality, these continent score the highest in comparison with other continents and have many countries in the top ten. The most unsuitable countries for life are of the African continent. There are many problems that need to be solved.

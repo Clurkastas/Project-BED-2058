@@ -1,3 +1,4 @@
+
 Which Country is the Best to Live in?
 ========================================================
 author: Kirill Tumanov, Mattia Storero, Lucas Stark
@@ -33,7 +34,6 @@ library(kableExtra)
 dat_raw  <- read.csv("dat_raw.csv")
 dat_wide <- read.csv("dat_wide.csv")
 dat_long <- read.csv("dat_long.csv")
-
 ```
 
 ```{r pie chart, include = T}
@@ -83,13 +83,6 @@ topictable %>%
 ```
 </font>
 
-An overview of Life Quality
-========================================================
-```{r analysis beginning, include = T}
-knitr::include_graphics('WorldPlot.png')
-```
-
-
 The Best and the Worst
 =========================================================
 ```{r}
@@ -97,10 +90,59 @@ knitr::include_graphics('TopBottom10.png')
 
 ```
 
+An overview of Life Quality
+========================================================
+```{r analysis beginning, include = T}
+knitr::include_graphics('WorldPlot.png')
+```
 
-Example Category: Health
+
+
+Health
 ========================================
 ```{r health}
 knitr::include_graphics('Health.png')
 
 ```
+
+Economy
+=======================================
+```{r}
+knitr::include_graphics('economy.png')
+```
+
+Economy
+=======================================
+```{r}
+knitr::include_graphics('economy2.png')
+```
+
+
+Safety
+========================================
+```{r}
+knitr::include_graphics('safety2.png')
+```
+
+Safety
+========================================
+```{r}
+knitr::include_graphics('safety3.png')
+```
+
+Environment
+========================================
+```{r}
+knitr::include_graphics('environment.png')
+```
+
+Conclusion
+========================================
+- Norway is the best country to live in according to our analysis
+- Corresponds OECD "Better Life Index"
+- 5/10 matches in Top 10: Norway, Australia, Denmark, the Netherlands, and Finland. 
+
+
+Thank you for your attention!
+========================================
+![Thank you for your attention!](http://poster.keepcalmandposters.com/default/5555035_thank_you_for_your_attention.png)
