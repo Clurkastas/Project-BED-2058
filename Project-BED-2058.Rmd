@@ -52,7 +52,7 @@ pie3D(slices,labels=lbls,explode=0.1,
 ```
 
 The first significant topic for us was health as it is an obvious indicator of life quality and we knew that data like life expectancy was well accessible.
-The second essential variable for us was economics as the economic situatio of a country is crucial for one's own situation.
+The second essential variable for us was economics as the economic situation of a country is crucial for one's own situation.
 How much income one gets and whether employment is secured does inflict life quality.
 The third vital marker for us was safety. 
 Everyone wants to feel secure. 
@@ -69,9 +69,9 @@ What additional information can we draw from the top and bottom ten countries lo
 
 # Data Acquisition
 
-As a source of data we considered different sources. These were gapminder, World Development Indicators (WDI), OECD, Quandl and eurostat.
+As far as the sources of data are concerned, we considered different sources. These were gapminder, World Development Indicators (WDI), OECD, Quandl and eurostat.
 Because OECD had only information on OECD countries that source had to be left out from the beginning. Quandl and eurostat were excluded because they shared the most important data with WDI. 
-Also overall, their data quality was worse.
+Also overall, their data quality was worse in order to get a clear analysis.
 So in the end, the data was acquired from the gapminder dataset of the gapminder Rpackage and and API to WDI. WDI provides data from multiple original sources, e.g. UNESCO Institute for Statistics, LAC Equity Lab and data they gathered on their own. 
 Variables were searched for each of the selected topics and selected on the basis of their quality, e.g. amount of missings and great enough variance. Because not all data was available for this or last year, we decided to take the most current data point from between the years 2000 and 2019 for each country.
 
@@ -79,7 +79,7 @@ Variables were searched for each of the selected topics and selected on the basi
 
 ## Factor Analysis
 
-To find out which variables we could use properly, we sorted the chosen variables  into our five overarching topics.
+To find out which variables we could use properly, we sorted the chosen variables into our five overarching topics.
 After sorting, we conducted a confirmatory factor analysis for each topic. Unfit variables were sorted out and are depicted in red color in the table below.
 Factor scores were used for further analysis.
 
@@ -120,10 +120,10 @@ topictable %>%
 
 
 
-## General Life Quality
+## Background
 
-All five variables for the individual topics were weighted equally to create the meta variable of life quality. 
-The top and bottom ten countries are depicted in the following chart.
+All five variables for the individual topics were weighted equally to create the meta variable of life quality. With this particular methosd, we were able to have a general point of view.
+The top and bottom ten countries will be depicted in the final chart. Before focalizing on it, it would be better to concentrate on the single variables.
 
 
 Now we will look at each subdimension of life quality to get a better understanding of how these add to life quality. 
@@ -332,8 +332,7 @@ The situation with european countries is completely different.
 They have a high level of CO2 emissions and not as much air pollution as African countries.
 This may be due to the fact that European countries use technologies to reduce air pollution and heighten ecological standards.
 
-## Conclusion
-
+## General Life Quality
 ```{r, echo = F, include = T}
 temp <- dat_wide %>%
   mutate(meta = (envir + health + econ + educ + secu)/5) %>%
@@ -474,6 +473,7 @@ In the plot you can see that there is a slight decrease of life quality with a h
 However, the relationship is not significant.
 Therefore, data suggests that life quality is independent from country size.
 
+## Conclusion
 
 As shown in the chapter above, Norway seems to be the best country to live in based on how we gathered and analyzed the data. 
 OECD cam to the same conclussion within their [Better Life Index Project](http://www.oecdbetterlifeindex.org/). 
