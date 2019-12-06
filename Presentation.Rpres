@@ -6,6 +6,16 @@ autosize: true
 
 What is Life Quality about?
 ========================================================
+class: illustration
+.exclaim .reveal .state-background {
+  background: black;
+} 
+
+
+
+
+
+
 ```{r setup, include=FALSE}
 rm(list=ls()) #delete workspace
 knitr::opts_chunk$set(echo = F, include = T, warning=F, error=F)

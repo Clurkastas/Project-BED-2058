@@ -6,6 +6,16 @@ autosize: true
 
 What is Life Quality about?
 ========================================================
+class: illustration
+.exclaim .reveal .state-background {
+  background: black;
+} 
+
+
+
+
+
+
 
 
 ![plot of chunk pie chart](Presentation-figure/pie chart-1.png)
