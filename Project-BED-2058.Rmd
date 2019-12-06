@@ -120,12 +120,155 @@ topictable %>%
 
 
 
-## Background
+## Method
 
 All five variables for the individual topics were weighted equally to create the meta variable of life quality. With this particular methosd, we were able to have a general point of view.
-The top and bottom ten countries will be depicted in the final chart. Before focalizing on it, it would be better to concentrate on the single variables.
+The top and bottom ten countries will be depicted in the next chart. 
+
+## General Life Quality
+```{r, echo = F, include = T}
+temp <- dat_wide %>%
+  mutate(meta = (envir + health + econ + educ + secu)/5) %>%
+  arrange(-meta)
+temp$topbot10 <- "neither"
+temp$topbot10[1:10] <- "Top 10"
+temp$topbot10[(length(temp$topbot10)-9):length(temp$topbot10)] <- "Bottom 10"
+
+populationdata <- read.csv2("populationWDI.csv", header = T)
+populationdata <- populationdata[,c(1,63)] 
+names(populationdata) <- c("country","population")
+temp$country <- as.character(temp$country)
+populationdata$country <- as.character(populationdata$country)
+populationdata$population <- as.numeric(populationdata$population)
+populationdata$country[populationdata$country=="Bahamas, The"] <- "Bahamas"
+populationdata$country[populationdata$country=="Russian Federation"] <- "Russia"
+populationdata$country[populationdata$country=="Iran, Islamic Rep."] <- "Iran"
+populationdata$country[populationdata$country=="Egypt, Arab Rep."]   <- "Egypt"
+populationdata$country[populationdata$country=="Syrian Arab Republic"]   <- "Syria"
+populationdata$country[populationdata$country=="Venezuela, RB"]   <- "Venezuela"
+populationdata$country[populationdata$country=="Gambia, The"]   <- "Gambia"
+populationdata$country[populationdata$country=="Micronesia, Fed. Sts."]   <- "Micronesia"
+populationdata$country[populationdata$country=="Yemen, Rep."] <- "Yemen"
+
+temp <- full_join(temp, populationdata, by = "country")
+temp <- temp[!is.na(temp$continent),]
+temp <- temp[!is.na(temp$population),]
+temp <- temp[str_detect(temp$country,"Hong", negate = T),]
+
+# add weighted data for continent means
+contitemp <- temp%>%
+  group_by(continent) %>%
+  summarise(contPop = sum(population))
+temp <- temp %>% full_join(contitemp, by = "continent") %>%
+  mutate(contweight = population/contPop)
 
 
+topbottom10 <- temp[temp$topbot10!="neither",] %>%
+  rename(`life quality` = meta,
+         economy = econ,
+         education = educ,
+         safety = secu,
+         environment = envir)
+
+```
+
+
+```{r, include = T}
+ggplot(data = topbottom10, mapping = aes(x = -rank(`life quality`), y = `life quality`,  fill = continent)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label=country, y = `life quality`/2), 
+            size = 5, angle = 90) +
+labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
+
+```
+
+As you can see `r topbottom10$country[max(topbottom10[,"life quality"])]` is the top country and therefore has the highest life quality according to our analysis.
+Also, other countries from Europe, Oceania and Asia are in the top ten.
+In the bottom ten only African countries are represented.
+
+The next graphic shows the world map with colors for each country.
+These colors represent the state of life quality of the country from low (red) to high (green). Countries in white color indicate missing values. 
+
+
+
+
+```{r analysis beginning, include = T}
+#world map
+thismap <- map_data("world")
+thismap$region[thismap$region=="Democratic Republic of the Congo"] <- "Congo, Dem. Rep."
+thismap$region[thismap$region=="Republic of Congo"] <- "Congo, Rep."
+temp2 <- temp[,c("country","meta")]
+temp2$country <- as.character(temp2$country)
+temp2$country[temp2$country=="United States"] <- "USA"
+temp2$country[temp2$country=="United Kingdom"] <- "UK"
+thismap2 <- full_join(thismap, temp2, 
+                     by = c("region" = "country")) 
+ggplot(thismap2, aes(long, lat, group=group, fill=meta), color = "white") +
+  scale_fill_gradient(limits=range(thismap2$meta), low="red", high="green", na.value = "white") + 
+  geom_polygon(show.legend = T) +
+  scale_y_continuous(limits = c(-60,max(thismap$lat))) + 
+  coord_fixed(1.3) + #this makes the right proportions for the image
+  theme(panel.background = element_rect(fill = 'lightblue', colour = 'black'))+
+  ggtitle("Life Quality across the World")
+```
+
+As you can see on the world map, each of the continents has different qualitative and quantitative features.
+In general, Europe is a rather green country, therefore offers high life quality.
+In contrast, Africa is a generally more red continent, therefore offers low life quality. 
+The other three continents (Americas, Asia and Oceania) are more diverse and rather in the middle field. Oceania seems to offer rather high life quality, but the smaller countries of it are not that visible. 
+To get a better look at the overall life quality per continent, the means are depicted in the following graph. 
+They are weighted by population size, so that every country contributes only their percentage of the total population in each continent.
+
+
+```{r analysis next, include = T}
+continentdata <- temp %>%
+  group_by(continent) %>%
+  summarise(health = sum(health*contweight),
+            economy = sum(econ*contweight),
+            education = sum(educ*contweight),
+            safety = sum(secu*contweight),
+            environment = sum(envir*contweight),
+            `life quality` = sum(meta*contweight))
+
+ggparcoord(continentdata,
+    columns = c("life quality", "health","economy",
+                "education","safety","environment"), 
+    groupColumn = "continent",
+    order = "allClass",
+    showPoints = TRUE, 
+    title = "Life Quality and Aspects by Continent",
+    alphaLines = 0.7) +
+  theme_ipsum()+
+  theme(
+    plot.title = element_text(size=10)
+  )
+```
+
+As you can see in this graph, the overall life quality per person is highest in Oceania. 
+This is probably due to the high values for Australia and New Zealand. Both countries are in the top ten of life quality. 
+Second place is Europe, third is the Americas. These three continents are all above average.
+Asia is half a standard deviation below average, and Africa even one and a half standard deviations below it. 
+Qualitative differences due to life quality can be seen in the five subdimensions, e.g. Oceania having a really high score in education, and the top three continents being relatively equal in terms of security.
+
+In a next step, we will have a quick view on whether life quality correlates with the population size.
+
+```{r analysis pop, include = T}
+#meta and population
+temp %>%
+  ggplot(aes(x=log10(population), y=meta, col=continent, label=country, size=pop)) +
+  geom_point() +
+  geom_smooth(col="blue", method = 'lm') +
+  ggtitle("Life Quality dependend on Population Size")
+
+```
+
+In the plot you can see that there is a slight decrease of life quality with a higher population. 
+However, the relationship is not significant.
+Therefore, data suggests that life quality is independent from country size.
+
+
+
+Before focalizing on it, it would be better to concentrate on the single variables.
 Now we will look at each subdimension of life quality to get a better understanding of how these add to life quality. 
 
 
@@ -183,7 +326,7 @@ On the contrary, the outcome that comes out from the worst 10 graph is emblemati
 In fact, in this special classification we can find only African countries. 
 
 
-```{r economy}
+```{r, echo = F, include = T, warning = F}
 #ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
   geom_bar(stat = "identity",position = "dodge") #+
   geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
@@ -332,146 +475,6 @@ The situation with european countries is completely different.
 They have a high level of CO2 emissions and not as much air pollution as African countries.
 This may be due to the fact that European countries use technologies to reduce air pollution and heighten ecological standards.
 
-## General Life Quality
-```{r, echo = F, include = T}
-temp <- dat_wide %>%
-  mutate(meta = (envir + health + econ + educ + secu)/5) %>%
-  arrange(-meta)
-temp$topbot10 <- "neither"
-temp$topbot10[1:10] <- "Top 10"
-temp$topbot10[(length(temp$topbot10)-9):length(temp$topbot10)] <- "Bottom 10"
-
-populationdata <- read.csv2("populationWDI.csv", header = T)
-populationdata <- populationdata[,c(1,63)] 
-names(populationdata) <- c("country","population")
-temp$country <- as.character(temp$country)
-populationdata$country <- as.character(populationdata$country)
-populationdata$population <- as.numeric(populationdata$population)
-populationdata$country[populationdata$country=="Bahamas, The"] <- "Bahamas"
-populationdata$country[populationdata$country=="Russian Federation"] <- "Russia"
-populationdata$country[populationdata$country=="Iran, Islamic Rep."] <- "Iran"
-populationdata$country[populationdata$country=="Egypt, Arab Rep."]   <- "Egypt"
-populationdata$country[populationdata$country=="Syrian Arab Republic"]   <- "Syria"
-populationdata$country[populationdata$country=="Venezuela, RB"]   <- "Venezuela"
-populationdata$country[populationdata$country=="Gambia, The"]   <- "Gambia"
-populationdata$country[populationdata$country=="Micronesia, Fed. Sts."]   <- "Micronesia"
-populationdata$country[populationdata$country=="Yemen, Rep."] <- "Yemen"
-
-temp <- full_join(temp, populationdata, by = "country")
-temp <- temp[!is.na(temp$continent),]
-temp <- temp[!is.na(temp$population),]
-temp <- temp[str_detect(temp$country,"Hong", negate = T),]
-
-# add weighted data for continent means
-contitemp <- temp%>%
-  group_by(continent) %>%
-  summarise(contPop = sum(population))
-temp <- temp %>% full_join(contitemp, by = "continent") %>%
-  mutate(contweight = population/contPop)
-
-
-topbottom10 <- temp[temp$topbot10!="neither",] %>%
-  rename(`life quality` = meta,
-         economy = econ,
-         education = educ,
-         safety = secu,
-         environment = envir)
-
-```
-
-
-```{r, include = T}
-ggplot(data = topbottom10, mapping = aes(x = -rank(`life quality`), y = `life quality`,  fill = continent)) +
-  geom_bar(stat = "identity") +
-  geom_text(aes(label=country, y = `life quality`/2), 
-            size = 5, angle = 90) +
-labs(x = "Countries", y = "Points", title = "Top 10 and Bottom 10 Countries in Life Quality")
-
-```
-
-As you can see `r topbottom10$country[max(topbottom10[,"life quality"])]` is the top country and therefore has the highest life quality according to our analysis.
-Also, other countries from Europe, Oceania and Asia are in the top ten.
-In the bottom ten only African countries are represented.
-
-The next graphic shows the world map with colors for each country.
-These colors represent the state of life quality of the country from low (red) to high (green). Countries in white color indicate missing values. 
-
-
-
-
-```{r analysis beginning, include = T}
-#world map
-thismap <- map_data("world")
-thismap$region[thismap$region=="Democratic Republic of the Congo"] <- "Congo, Dem. Rep."
-thismap$region[thismap$region=="Republic of Congo"] <- "Congo, Rep."
-temp2 <- temp[,c("country","meta")]
-temp2$country <- as.character(temp2$country)
-temp2$country[temp2$country=="United States"] <- "USA"
-temp2$country[temp2$country=="United Kingdom"] <- "UK"
-thismap2 <- full_join(thismap, temp2, 
-                     by = c("region" = "country")) 
-ggplot(thismap2, aes(long, lat, group=group, fill=meta), color = "white") +
-  scale_fill_gradient(limits=range(thismap2$meta), low="red", high="green", na.value = "white") + 
-  geom_polygon(show.legend = T) +
-  scale_y_continuous(limits = c(-60,max(thismap$lat))) + 
-  coord_fixed(1.3) + #this makes the right proportions for the image
-  theme(panel.background = element_rect(fill = 'lightblue', colour = 'black'))+
-  ggtitle("Life Quality across the World")
-```
-
-As you can see on the world map, each of the continents has different qualitative and quantitative features.
-In general, Europe is a rather green country, therefore offers high life quality.
-In contrast, Africa is a generally more red continent, therefore offers low life quality. 
-The other three continents (Americas, Asia and Oceania) are more diverse and rather in the middle field. Oceania seems to offer rather high life quality, but the smaller countries of it are not that visible. 
-To get a better look at the overall life quality per continent, the means are depicted in the following graph. 
-They are weighted by population size, so that every country contributes only their percentage of the total population in each continent.
-
-
-```{r analysis next, include = T}
-continentdata <- temp %>%
-  group_by(continent) %>%
-  summarise(health = sum(health*contweight),
-            economy = sum(econ*contweight),
-            education = sum(educ*contweight),
-            safety = sum(secu*contweight),
-            environment = sum(envir*contweight),
-            `life quality` = sum(meta*contweight))
-
-ggparcoord(continentdata,
-    columns = c("life quality", "health","economy",
-                "education","safety","environment"), 
-    groupColumn = "continent",
-    order = "allClass",
-    showPoints = TRUE, 
-    title = "Life Quality and Aspects by Continent",
-    alphaLines = 0.7) +
-  theme_ipsum()+
-  theme(
-    plot.title = element_text(size=10)
-  )
-```
-
-As you can see in this graph, the overall life quality per person is highest in Oceania. 
-This is probably due to the high values for Australia and New Zealand. Both countries are in the top ten of life quality. 
-Second place is Europe, third is the Americas. These three continents are all above average.
-Asia is half a standard deviation below average, and Africa even one and a half standard deviations below it. 
-Qualitative differences due to life quality can be seen in the five subdimensions, e.g. Oceania having a really high score in education, and the top three continents being relatively equal in terms of security.
-
-In a next step, we will have a quick view on whether life quality correlates with the population size.
-
-```{r analysis pop, include = T}
-#meta and population
-temp %>%
-  ggplot(aes(x=log10(population), y=meta, col=continent, label=country, size=pop)) +
-  geom_point() +
-  geom_smooth(col="blue", method = 'lm') +
-  ggtitle("Life Quality dependend on Population Size")
-
-```
-
-In the plot you can see that there is a slight decrease of life quality with a higher population. 
-However, the relationship is not significant.
-Therefore, data suggests that life quality is independent from country size.
 
 ## Conclusion
 
