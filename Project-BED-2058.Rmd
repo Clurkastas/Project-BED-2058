@@ -129,7 +129,7 @@ The top and bottom ten countries are depicted in the following chart.
 Now we will look at each subdimension of life quality to get a better understanding of how these add to life quality. 
 
 
-## Health - Lucas
+## Health
 
 For measuring health we included five different variables: the percentage of people getting to the age of 65 seperate for men and women, the life expectancy, acces to clean cooking possibilities and child mortality.
 They are depicted in the plot below with the health factor on the x-axis and the individual variables on the y-axis. 
@@ -162,7 +162,7 @@ temp_h %>%
 
 
 
-## Economy - Mattia
+## Economy 
 In order to analyse the sphere of economics, 3 variables have been considered.
 To make it possible, we have decided to include two of the three fundamental economic variables: GDP per capita and the unemployment rate. The GDP PER CAPITA is a measure of a country's economic output that accounts for its number of people. 
 The unemployment rate was selected because is the most important variable to determine the health of the economy in the country. 
@@ -216,7 +216,7 @@ The graphs show the relationship between the three economic variables taken two 
 The three parallelisms confirm the classification previously obtained. 
 In general, it is possible to see that almost the 10 best and worst countries confirm their position in all the three graphs.
 
-## Safety - Kirill
+## Safety 
 ```{r}
 ggplot(data = topbottom10, mapping = aes(x = -rank(safety), y = safety,  fill = continent)) +
   geom_bar(stat = "identity") +
@@ -316,7 +316,7 @@ The highest of those values is `r max(pay_btm$measurement)` percent of students 
 So in an educational view on this topic, it is definitely better to live in the top ten countries because you're probability of attending school and receiving monetary support is higher.
 
 
-## Environment - Kirill
+## Environment 
 ```{r}
 temp %>% 
   ggplot(aes(x = CO2, y = air,
@@ -471,7 +471,10 @@ temp %>%
 ```
 
 In the plot you can see that there is a slight decrease of life quality with a higher population. 
-However, the relationship is not significant. Therefore, data suggests that life quality is independent from country size. 
+However, the relationship is not significant.
+Therefore, data suggests that life quality is independent from country size.
+
+
 As shown in the chapter above, Norway seems to be the best country to live in based on how we gathered and analyzed the data. 
 OECD cam to the same conclussion within their [Better Life Index Project](http://www.oecdbetterlifeindex.org/). 
 They did use more categories and different variables, but answered the question in the same way, which is a nice validation of the result.
@@ -479,6 +482,8 @@ Interestingly, five of our top ten countries are also in their top ten.
 These are Norway, Australia, Denmark, the Netherlands, and Finland. 
 
 
-This shows more intersections, especially on the life quality of northern European countries, which seems to be really high. But in general, it is good to be born in either Oceania or Europe. In mean of life quality, these continent score the highest in comparison with other continents and have many countries in the top ten. The most unsuitable countries for life are of the African continent. There are many problems that need to be solved.
+This shows more intersections, especially on the life quality of northern European countries, which seems to be really high.
+But in general, it is good to be born in either Oceania or Europe. In mean of life quality, these continent score the highest in comparison with other continents and have many countries in the top ten.
+The most unsuitable countries for life are of the African continent. There are many problems that need to be solved.
 
 
