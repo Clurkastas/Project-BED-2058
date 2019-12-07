@@ -356,6 +356,37 @@ ep3 <-  temp %>%
 ep3
 #ggsave("economy2.png", height = 7 , width = 12)
 ```
+
+
+```{r}
+#fixed graphs to knit  
+
+ep1 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = gini,
+             col = continent)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
+  geom_point() + labs(x = "GDP per capita", y = "Gini coefficient", title = "Relationship between GDP per capita and GINI index")
+ep1
+
+ep2 <- temp %>% 
+  ggplot(aes(x = gdpPercap, y = unemp, 
+             col = continent)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
+  geom_point()+ labs(x = "GDP per capita", y = "unemployment rate", title = "Relationship between GDP per capita and unemployment rate")  
+
+ep2 
+  
+ep3 <-  temp %>% 
+  ggplot(aes(x = gini, y = unemp, 
+             col = continent)) +
+  geom_text(dat=topbottom10, aes(label=country)) +
+  geom_point()+ labs(x = "GINI coefficient", y = "unemployment rate", title = "Relationship between GINI index per capita and unemployment rate")
+ep3
+```
+
+
+
+
 The graphs show the relationship between the three economic variables taken two at a time (in this order: GDP/GINI, GDP/UNEMPLOYMENT, GINI/UNEMPLOYMENT).
 The three parallelisms confirm the classification previously obtained. 
 In general, it is possible to see that almost the 10 best and worst countries confirm their position in all the three graphs.That could be also a starting point for a further analysis: thanks to the correlation between the economic variables and the aggregated ones, it is possible to conclude that is the economic point view is the direct cause/consequence of a good quality of life.
