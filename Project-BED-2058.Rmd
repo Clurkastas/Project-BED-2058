@@ -511,11 +511,11 @@ This may be due to the fact that European countries use technologies to reduce a
 ## Conclusion
 
 As shown in the chapter above, Norway seems to be the best country to live in based on how we gathered and analyzed the data. 
-OECD cam to the same conclusion within their [Better Life Index Project](http://www.oecdbetterlifeindex.org/). 
+OECD came to the same conclusion within their [Better Life Index Project](http://www.oecdbetterlifeindex.org/). 
 They did use more categories and different variables, but answered the question in the same way, which is a nice validation of the result.
 Interestingly, five of our top ten countries are also in their top ten.
 These are Norway, Australia, Denmark, the Netherlands, and Finland.
-This problably means that even if the considered variables are different and even if we use a different method to aggregate them, the core of the two works is the same.
+This probably means that even if the considered variables are different and even if we use a different method to aggregate them, the core of the two works is the same.
 
 It is possible to notice that the outcome we got is the result of the combination of more factors.
 This shows more intersections, especially on the life quality of northern European countries, which seems to be really high.
