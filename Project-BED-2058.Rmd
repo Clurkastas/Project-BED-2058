@@ -327,37 +327,6 @@ On the contrary, the outcome that comes out from the worst 10 graph is emblemati
 In fact, in this special classification we can find only African countries. 
 
 
-```{r, echo=F, message=FALSE, warning=FALSE, include=T}
-#ggplot(data = dat_long[dat_long$variable=="gdpPercap"& dat_long$country=="Norway"|dat_long$variable=="gini"& dat_long$country=="Norway"|dat_long$variable=="unemp" & dat_long$country=="Norway",], mapping = aes(x = country, y = measurement,  fill = variable, group = variable)) +
-  geom_bar(stat = "identity",position = "dodge") #+
-  geom_text(aes(label=country, y = econ/2), size = 5, angle = 90)
-  
-
-ep1 <- temp %>% 
-  ggplot(aes(x = gdpPercap, y = gini,
-             col = continent)) +
-  geom_text(dat=topbottom10, aes(label=country)) +
-  geom_point() + labs(x = "GDP per capita", y = "Gini coefficient", title = "Relationship between GDP per capita and GINI index")
-ep1
-
-ep2 <- temp %>% 
-  ggplot(aes(x = gdpPercap, y = unemp, 
-             col = continent)) +
-  geom_text(dat=topbottom10, aes(label=country)) +
-  geom_point()+ labs(x = "GDP per capita", y = "unemployment rate", title = "Relationship between GDP per capita and unemployment rate")  
-
-ep2 
-  
-ep3 <-  temp %>% 
-  ggplot(aes(x = gini, y = unemp, 
-             col = continent)) +
-  geom_text(dat=topbottom10, aes(label=country)) +
-  geom_point()+ labs(x = "GINI coefficient", y = "unemployment rate", title = "Relationship between GINI index per capita and unemployment rate")
-ep3
-#ggsave("economy2.png", height = 7 , width = 12)
-```
-
-
 ```{r}
 #fixed graphs to knit  
 
