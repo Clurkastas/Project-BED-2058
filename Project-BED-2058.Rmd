@@ -122,7 +122,7 @@ topictable %>%
 
 ## Method
 
-All five variables for the individual topics were weighted equally to create the meta variable of life quality. With this particular methosd, we were able to have a general point of view.
+All five variables for the individual topics were weighted equally to create the meta variable of life quality. With this particular method, we were able to have a general point of view.
 The top and bottom ten countries will be depicted in the next chart. 
 
 ## General Life Quality
@@ -186,7 +186,7 @@ As you can see `r topbottom10$country[max(topbottom10[,"life quality"])]` is the
 Also, other countries from Europe, Oceania and Asia are in the top ten.
 In the bottom ten only African countries are represented.
 
-The next graphic shows the world map with colors for each country.
+The next graph shows the world map with colors for each country.
 These colors represent the state of life quality of the country from low (red) to high (green). Countries in white color indicate missing values. 
 
 
@@ -244,7 +244,7 @@ ggparcoord(continentdata,
   )
 ```
 
-As it is possible to observe in this graph, the overall life quality per person is highest in Oceania. 
+As it is possible to observe in this graph, the overall life quality per person presents the highest value in Oceania. 
 This is probably due to the high values for Australia and New Zealand. Both countries are in the top ten of life quality. 
 Second place is Europe, third is the Americas. These three continents are all above average.
 Asia is half a standard deviation below average, and Africa even one and a half standard deviations below it. 
@@ -320,7 +320,7 @@ ggplot2::ggplot(data = topbottom10, mapping = aes(x = -rank(economy), y = econom
   geom_text(aes(label=country, y = economy/2), size = 5, angle = 90)
 ```
 
-This graph show the result that comes out putting the three variables together in one called "ECON".
+This graph shows the result that comes out putting the three variables together in one called "ECON".
 Doing this union, we found a result that is very similar to the ones obtained with the other variables.
 In the top ten, there are 5 countries from Europe, 3 from Asia and 2 from Oceania. In this case, Norway is considered the best one.
 On the contrary, the outcome that comes out from the worst 10 graph is emblematic. 
@@ -494,7 +494,7 @@ Despite this, it's evident the norther countries scored a higher value in many v
 In general, these continent score the highest in mean of life quality in comparison with other continents and have many countries in the top ten. 
 An other clarification is necessary for the America's and Asia's situations.
 Even if the results are different, it is possible to find some common grounds between them. 
-In fact, they have presented an high differentiation within theio own territory.
+In fact, they have presented an high differentiation within their own territory.
 The good results that United States, Singapore, Japan and Israel have showed are contrasted with the other ones.
 As regards USA, the explanation can be found in the bad results of the South America. As regards Singapore, Japan and Israel (3 of the best 10), the explanation can be found in the really different economic and development situations that the Asian continent shows.
 From the other end of the scale, the most unsuitable countries for life are the ones of the African continent.
